@@ -1,0 +1,72 @@
+{
+  "id": "2436804",
+  "name": "zhixiao",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "20539490",
+      "name": "箭头_右",
+      "font_class": "jiantoudown",
+      "unicode": "e7a9",
+      "unicode_decimal": 59305
+    },
+    {
+      "icon_id": "20539499",
+      "name": "箭头_右",
+      "font_class": "jiantouleft",
+      "unicode": "e7aa",
+      "unicode_decimal": 59306
+    },
+    {
+      "icon_id": "20539503",
+      "name": "箭头_右",
+      "font_class": "jiantouup",
+      "unicode": "e7ab",
+      "unicode_decimal": 59307
+    },
+    {
+      "icon_id": "1177749",
+      "name": "我的",
+      "font_class": "wode",
+      "unicode": "e638",
+      "unicode_decimal": 58936
+    },
+    {
+      "icon_id": "1980999",
+      "name": "箭头_右",
+      "font_class": "jiantouright",
+      "unicode": "e616",
+      "unicode_decimal": 58902
+    },
+    {
+      "icon_id": "2019062",
+      "name": "商城",
+      "font_class": "shangcheng",
+      "unicode": "e7a8",
+      "unicode_decimal": 59304
+    },
+    {
+      "icon_id": "8448530",
+      "name": "删除",
+      "font_class": "ziyuan",
+      "unicode": "e622",
+      "unicode_decimal": 58914
+    },
+    {
+      "icon_id": "8843325",
+      "name": "关闭",
+      "font_class": "guanbi",
+      "unicode": "e641",
+      "unicode_decimal": 58945
+    },
+    {
+      "icon_id": "14095246",
+      "name": "加",
+      "font_class": "jia",
+      "unicode": "e779",
+      "unicode_decimal": 59257
+    }
+  ]
+}

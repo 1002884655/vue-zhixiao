@@ -1,15 +1,13 @@
 <template>
-  <div class="Page Index">
+  <div class="Page ShopIndex">
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-// const MainPage = () => import('@/components/common/MainPage')
 export default {
   name: 'index',
   components: {
-    // MainPage
   },
   data: () => {
     return {

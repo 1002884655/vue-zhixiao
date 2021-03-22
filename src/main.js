@@ -4,6 +4,7 @@ import router from './router'
 import store from './store'
 import ToolClass from './util/PublicMethods'
 import './assets/css/reset.scss'
+import './assets/css/iconfont.css'
 import VueScroller from 'vue-scroller'
 
 Vue.use(VueScroller)

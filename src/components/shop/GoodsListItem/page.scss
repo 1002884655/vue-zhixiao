@@ -1,0 +1,32 @@
+.components.GoodsListItem {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  background: #fff;
+  border-radius: 0.09rem;
+  box-shadow: 0 0 0.05rem 0.05rem rgba(0, 0, 0, 0.05);
+  display: block;
+  > .Img {
+    width: 100%;
+    position: relative;
+    height: 0;
+    padding-bottom: 56.25%;
+    overflow: hidden;
+    background: #eee;
+  }
+  > .Title {
+    align-items: center;
+    border-top: 1px solid #eee;
+    > .flex-item {
+      padding: 0 0.08rem;
+      > span {
+        font-size: 0.14rem;
+        line-height: 0.4rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-weight: bold;
+      }
+    }
+  }
+}

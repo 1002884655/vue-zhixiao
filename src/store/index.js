@@ -6,23 +6,17 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
+    MainTitle: '',
     MainTabDefaultColor: '#999', // 页底tab默认色值
     MainTabActiveColor: 'red', // 页底tab选中色值
-    HideMainTab: false, // 隐藏页底tab
-    MainTabActiveId: 1, // 页底tab选中id
     MainTabArr: [ // 页底tab数据
-      { name: 'Tab1', id: 1, img: require('@/assets/img/icon.png'), activeImg: require('@/assets/img/icon-active.png'), router: null },
-      { name: 'Tab2', id: 2, img: require('@/assets/img/icon.png'), activeImg: require('@/assets/img/icon-active.png'), router: null },
-      { name: 'Tab3', id: 3, img: require('@/assets/img/icon.png'), activeImg: require('@/assets/img/icon-active.png'), router: null },
-      { name: 'Tab4', id: 4, img: require('@/assets/img/icon.png'), activeImg: require('@/assets/img/icon-active.png'), router: null }
+      { name: '商城', id: 1, icon: 'iconshangcheng', routerName: 'shopHome' },
+      { name: '我的', id: 2, icon: 'iconwode', routerName: 'mineHome' }
     ]
   },
   mutations: {
-    EditHideMainTab (state, data) { // 编辑隐藏页底tab
-      state.HideMainTab = data
-    },
-    EditMainTabActiveId (state, data) { // 编辑页底tab选中id
-      state.MainTabActiveId = data
+    EditMainTitle (state, data) {
+      state.MainTitle = data
     }
   },
   actions: {
