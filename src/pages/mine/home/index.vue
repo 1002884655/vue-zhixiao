@@ -93,6 +93,10 @@
                     <span class="flex-item">我推荐的人</span>
                     <i class="iconfont iconjiantouright"></i>
                   </router-link>
+                  <router-link class="flex-h" :to="{ name: 'myAddress' }">
+                    <span class="flex-item">我的收货地址</span>
+                    <i class="iconfont iconjiantouright"></i>
+                  </router-link>
                 </div>
               </div>
             </PageRefresh>
