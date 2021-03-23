@@ -10,7 +10,7 @@
               <div class="UserIcon">
                 <img :src="null" class="centerLabel cover">
               </div>
-              <router-link :to="{ name: 'login' }">登录</router-link>
+              <router-link :to="{ name: 'login' }">登录/注册</router-link>
               <div class="flex-item">
                 <span>用户昵称</span>
                 <span>18811111111</span>
