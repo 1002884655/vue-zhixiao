@@ -123,6 +123,14 @@ let router = new VueRouter({
               children: []
             }
           ]
+        },
+        {
+          path: '/login', // 登录
+          name: 'login',
+          meta: {
+            title: '登录/注册'
+          },
+          component: resolve => (require(['@/pages/login'], resolve))
         }
       ]
     }

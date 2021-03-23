@@ -1,0 +1,87 @@
+.Page {
+  width: 100%;
+  height: 100%;
+  .Content {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    > div {
+      width: 2.4rem;
+      > .Form {
+        position: relative;
+        overflow: hidden;
+        > .flex-h {
+          align-items: center;
+          margin-top: 0.1rem;
+          box-sizing: border-box;
+          &.Line {
+            border: 1px solid #ccc;
+            border-radius: 0.03rem;
+          }
+          &:first-child {
+            margin-top: 0;
+          }
+          > i {
+            font-size: 0.24rem;
+            color: #ccc;
+            line-height: 0.4rem;
+            width: 0.4rem;
+            text-align: center;
+          }
+          > div {
+            position: relative;
+            overflow: hidden;
+            > input {
+              width: 100%;
+              display: block;
+              font-size: 0.14rem;
+              line-height: 0.2rem;
+              padding: 0.1rem 0;
+            }
+          }
+          > a {
+            color: #fff;
+            background: #e00f3a;
+            padding: 0 0.05rem;
+            line-height: 0.24rem;
+            border-radius: 0.03rem;
+            margin-right: 0.1rem;
+          }
+          > span {
+            font-size: 0.14rem;
+            color: #ccc;
+            margin-right: 0.1rem;
+          }
+        }
+        > a {
+          display: block;
+          font-size: 0.14rem;
+          background: #ccc;
+          line-height: 0.4rem;
+          text-align: center;
+          border-radius: 0.03rem;
+          margin-top: 0.2rem;
+          color: #fff;
+          user-select: none;
+          &.active {
+            background: #e00f3a;
+          }
+        }
+        > span {
+          display: block;
+          text-align: center;
+          font-size: 0.14rem;
+          line-height: 0.2rem;
+          white-space: nowrap;
+          margin-top: 0.2rem;
+          > a {
+            font-size: 0.14rem;
+            line-height: 0.2rem;
+            color: #e00f3a;
+          }
+        }
+      }
+    }
+  }
+}
