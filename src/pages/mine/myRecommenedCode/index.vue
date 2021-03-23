@@ -1,19 +1,30 @@
 <template>
   <div class="Page">
-    <PageRefresh @Refresh="Refresh" @Infinite="Infinite">
-      我的推荐码
-    </PageRefresh>
+    <MainPage>
+      <div class="PageContainer">
+        <div class="Tips">扫描二维码或者填写推荐码即可完成推荐</div>
+        <div class="centerLabel">
+          <div class="QrCode">
+            <img :src="null" class="centerLabel contain">
+          </div>
+          <div class="Text">
+            <span>您的推荐码是：</span>
+            <span>123456</span>
+          </div>
+        </div>
+      </div>
+    </MainPage>
   </div>
 </template>
 
 <script>
 import { createNamespacedHelpers } from 'vuex'
 const { mapState: mapUserState, mapActions: mapUserActions } = createNamespacedHelpers('user')
-const PageRefresh = () => import('@/components/common/PageRefresh')
+const MainPage = () => import('@/components/common/MainPage')
 export default {
   name: 'index',
   components: {
-    PageRefresh
+    MainPage
   },
   data: () => {
     return {

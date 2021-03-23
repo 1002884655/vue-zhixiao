@@ -1,6 +1,171 @@
 .Page {
   width: 100%;
   height: 100%;
-  position: relative;
-  overflow: hidden;
+  .Content {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    > .Top {
+      width: 100%;
+      padding-bottom: 56.25%;
+      background: #e00f3a;
+      position: relative;
+      height: 0;
+      overflow: hidden;
+      > div {
+        width: 100%;
+        > div {
+          padding: 0 0.15rem;
+          position: relative;
+          overflow: hidden;
+          align-items: center;
+          > .UserIcon {
+            width: 0.6rem;
+            height: 0.6rem;
+            position: relative;
+            overflow: hidden;
+            border-radius: 100%;
+            background: #fff;
+            margin-right: 0.15rem;
+          }
+          > .flex-item {
+            > span {
+              font-size: 0.14rem;
+              color: #fff;
+              line-height: 0.2rem;
+              display: block;
+              &:first-child {
+                font-size: 0.16rem;
+                font-weight: bold;
+                margin-bottom: 0.05rem;
+              }
+            }
+          }
+        }
+      }
+    }
+    > .flex-item {
+      position: relative;
+      overflow: hidden;
+      > div {
+        width: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        overflow: hidden;
+        .SubContent {
+          width: 100%;
+          position: relative;
+          overflow: hidden;
+          > .PerformanceInfo {
+            position: relative;
+            overflow: hidden;
+            background: #fff;
+            border: 1px solid #eee;
+            border-left: none;
+            border-right: none;
+            margin-top: 0.1rem;
+            padding: 0.15rem 0;
+            > div {
+              position: relative;
+              overflow: hidden;
+              &::after {
+                content: "";
+                width: 1px;
+                height: 50%;
+                display: block;
+                position: absolute;
+                left: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                -webkit-transform: translateY(-50%);
+                background: #eee;
+              }
+              &:first-child {
+                &::after {
+                  display: none;
+                }
+              }
+              > span {
+                font-size: 0.16rem;
+                line-height: 0.3rem;
+                text-align: center;
+                color: #333;
+                display: block;
+                &:first-child {
+                  color: #e00f3a;
+                  font-weight: bold;
+                  font-size: 0.2rem;
+                }
+              }
+            }
+          }
+          > .MoreInfo {
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #eee;
+            border-right: none;
+            border-left: none;
+            background: #fff;
+            margin-top: 0.1rem;
+            padding: 0.15rem;
+            > .flex-h {
+              align-items: center;
+              margin-top: 0.05rem;
+              &:first-child {
+                margin-top: 0;
+              }
+              > div {
+                font-size: 0;
+                white-space: nowrap;
+                margin-left: 0.1rem;
+                &:first-child {
+                  margin-left: 0;
+                }
+                > span {
+                  display: inline-block;
+                  vertical-align: middle;
+                  font-size: 0.14rem;
+                  line-height: 0.2rem;
+                  white-space: nowrap;
+                  &:nth-child(2) {
+                    color: #e00f3a;
+                    font-weight: bold;
+                  }
+                }
+              }
+            }
+          }
+          > .UserMenu {
+            position: relative;
+            overflow: hidden;
+            background: #fff;
+            margin-top: 0.1rem;
+            margin-bottom: 0.4rem;
+            > .flex-h {
+              position: relative;
+              overflow: hidden;
+              background: #fff;
+              align-items: center;
+              padding: 0 0.15rem;
+              border-bottom: 1px solid #eee;
+              &:first-child {
+                border-top: 1px solid #eee;
+              }
+              > span {
+                font-size: 0.14rem;
+                line-height: 0.46rem;
+              }
+              > i {
+                font-size: 0.14rem;
+                color: #999;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }

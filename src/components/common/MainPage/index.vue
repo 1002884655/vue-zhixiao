@@ -1,13 +1,13 @@
 <template>
   <div class="components MainPage flex-v">
-    <div class="Top" v-if="!HideMainHeader">
-      <a class="iconfont iconjiantouleft MainTopBack" v-if="HideMainTab"></a>
+    <div class="MainTop" v-if="!HideMainHeader">
+      <a class="iconfont iconjiantouleft MainTopBack" v-if="HideMainTab" @click="$router.go(-1)"></a>
       <span class="Title">{{Title}}</span>
     </div>
-    <div class="Content flex-item">
+    <div class="MainContent flex-item">
       <slot></slot>
     </div>
-    <div class="Bottom flex-h" v-if="!HideMainTab">
+    <div class="MainBottom flex-h" v-if="!HideMainTab">
       <div class="flex-item MainBottomTabItem" v-for="(item, index) in MainTabArr" :key="index">
         <router-link :to="{ name: item.routerName }">
           <i class="iconfont" v-if="item.icon !== undefined" :class="[MainTabActiveId === item.id ? `${item.icon} active` : item.icon]" :style="{color: MainTabActiveId === item.id ? MainTabActiveColor : MainTabDefaultColor}"></i><br v-if="item.icon !== undefined">

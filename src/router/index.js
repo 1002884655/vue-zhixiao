@@ -90,7 +90,7 @@ let router = new VueRouter({
               path: '/mine/myOrderList', // 我的订单列表
               name: 'myOrderList',
               meta: {
-                title: '我的订单列表'
+                title: '我的订单'
               },
               component: resolve => (require(['@/pages/mine/myOrderList'], resolve)),
               children: []

@@ -3,4 +3,117 @@
   height: 100%;
   position: relative;
   overflow: hidden;
+  background: #f8f8f8;
+  .Content {
+    position: relative;
+    overflow: hidden;
+    > .OrderList {
+      position: relative;
+      overflow: hidden;
+      background: #fff;
+      margin-bottom: 0.15rem;
+      border: 1px solid #eee;
+      border-left: none;
+      border-right: none;
+      padding: 0 0.15rem 0.15rem;
+      &:first-child {
+        margin-top: 0.15rem;
+      }
+      > .Top {
+        font-size: 0;
+        white-space: nowrap;
+        border-bottom: 1px solid #eee;
+        align-items: center;
+        > span {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          font-size: 0.13rem;
+          color: #333;
+          line-height: 0.4rem;
+          margin-left: 0.1rem;
+          &:first-child {
+            margin-left: 0;
+          }
+        }
+      }
+      > .GoodsList {
+        margin-top: 0.15rem;
+        &:first-child {
+          margin-top: 0;
+        }
+        > .Img {
+          width: 0.8rem;
+          height: 0.8rem;
+          position: relative;
+          overflow: hidden;
+          background: #eee;
+          margin-right: 0.15rem;
+        }
+        > .flex-item {
+          > .flex-item {
+            > span {
+              font-size: 0.14rem;
+              line-height: 0.2rem;
+              color: #333;
+              margin-right: 0.1rem;
+            }
+            > div {
+              > span {
+                font-size: 0.14rem;
+                line-height: 0.2rem;
+                display: block;
+                text-align: right;
+                display: block;
+                &:first-child {
+                  color: #e00f3a;
+                  font-weight: bold;
+                }
+              }
+            }
+          }
+          > .CreateTime {
+            font-size: 0.14rem;
+            color: #999;
+            line-height: 0.2rem;
+          }
+        }
+      }
+      > .Status {
+        margin-top: 0.15rem;
+        text-align: right;
+        border-top: 1px solid #eee;
+        padding-top: 0.1rem;
+        > * {
+          font-size: 0.14rem;
+          line-height: 0.2rem;
+          display: block;
+          &:first-child {
+            font-weight: bold;
+            text-align: right;
+          }
+          > em {
+            font-size: 0.14rem;
+            line-height: 0.2rem;
+            color: #e00f3a;
+          }
+          &.Btn {
+            width: 1rem;
+            display: inline-block;
+            line-height: 0.35rem;
+            text-align: center;
+            background: #e00f3a;
+            margin-top: 0.1rem;
+            color: #fff;
+            border-radius: 0.04rem;
+          }
+          &.Text {
+            font-size: 0.14rem;
+            line-height: 0.35rem;
+            display: inline-block;
+          }
+        }
+      }
+    }
+  }
 }

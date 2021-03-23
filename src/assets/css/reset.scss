@@ -144,4 +144,14 @@ body {
     height: 100%;
     object-fit: contain;
   }
+
+  .swiper-pagination-bullet {
+    margin-left: 0.05rem;
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+  .swiper-pagination-bullet-active {
+    background: #e00f3a;
+  }
 }

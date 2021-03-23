@@ -3,4 +3,120 @@
   height: 100%;
   position: relative;
   overflow: hidden;
+  background: #f8f8f8;
+  .GoodsDetailContainer {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    > .flex-item {
+      position: relative;
+      overflow: hidden;
+      > div {
+        width: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        overflow: hidden;
+        .Content {
+          position: relative;
+          overflow: hidden;
+          > .BannerSwiper {
+            width: 100%;
+            padding-bottom: 56.25%;
+            position: relative;
+            overflow: hidden;
+            height: 0;
+            > div {
+              width: 100%;
+              position: absolute;
+              left: 0;
+              top: 0;
+              bottom: 0;
+              overflow: hidden;
+              > div {
+                width: 100%;
+                height: 100%;
+                position: relative;
+                z-index: 1;
+                &.SwiperPoints {
+                  height: 0.2rem;
+                  position: absolute;
+                  left: 0;
+                  bottom: 0;
+                  z-index: 2;
+                  text-align: center;
+                }
+              }
+              .BannerItem {
+                width: 100%;
+                height: 100%;
+                position: relative;
+                overflow: hidden;
+              }
+            }
+          }
+          > .Title {
+            padding: 0 0.15rem;
+            background: #fff;
+            position: relative;
+            overflow: hidden;
+            > span {
+              font-size: 0.16rem;
+              font-weight: bold;
+              color: #333;
+              line-height: 0.2rem;
+              padding: 0.1rem 0;
+            }
+          }
+          > .Detail {
+            position: relative;
+            overflow: hidden;
+            margin-top: 0.15rem;
+            background: #fff;
+            > .Text {
+              padding: 0 0.15rem;
+              font-size: 0.14rem;
+              line-height: 0.4rem;
+              border-bottom: 1px solid #eee;
+              display: block;
+            }
+            > img {
+              display: block;
+            }
+          }
+        }
+      }
+    }
+    > .Bottom {
+      background: #fff;
+      border-top: 1px solid #eee;
+      > .flex-item {
+        padding: 0 0.15rem;
+        > span {
+          font-size: 0.16rem;
+          color: #e00f3a;
+          font-weight: bold;
+          line-height: 0.46rem;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: block;
+        }
+      }
+      > .Btn {
+        width: 1rem;
+        text-align: center;
+        font-size: 0.14rem;
+        color: #fff;
+        background: #ccc;
+        line-height: 0.46rem;
+        user-select: none;
+        &.active {
+          background: #e00f3a;
+        }
+      }
+    }
+  }
 }
