@@ -18,7 +18,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: #333;
-    font-size: .13rem;
+    font-size: 0.13rem;
   }
 
   a {
@@ -153,5 +153,8 @@ body {
   }
   .swiper-pagination-bullet-active {
     background: #e00f3a;
+  }
+  .van-toast__text {
+    color: #fff;
   }
 }

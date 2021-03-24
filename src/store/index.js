@@ -6,24 +6,21 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    MainTitle: '',
+    MainTabActiveColor: '#e00f3a', // 页底tab选中色值
     MainTabDefaultColor: '#999', // 页底tab默认色值
-    MainTabActiveColor: 'red', // 页底tab选中色值
     MainTabArr: [ // 页底tab数据
       { name: '商城', id: 1, icon: 'iconshangcheng', routerName: 'shopHome' },
       { name: '我的', id: 2, icon: 'iconwode', routerName: 'mineHome' }
     ]
   },
   mutations: {
-    EditMainTitle (state, data) {
-      state.MainTitle = data
-    }
   },
   actions: {
   }
 })
 export const modules = {
-  user: () => require('./user/index').default
+  user: () => require('./user/index').default,
+  goods: () => require('./goods/index').default
 }
 
 Object.keys(modules).forEach((modKey) => {

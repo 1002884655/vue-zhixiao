@@ -1,11 +1,11 @@
 <template>
-  <router-link tag="div" class="components GoodsListItem" :to="{ name: 'goodsDetail', query: { id: 'xxx' } }">
+  <router-link tag="div" class="components GoodsListItem" :to="{ name: 'goodsDetail', query: { id: data.id } }">
     <div class="Img">
-      <img :src="null" class="centerLabel cover" alt="">
+      <img :src="data.pictureUrl" class="centerLabel cover" alt="">
     </div>
     <div class="Title flex-h">
       <div class="flex-item">
-        <span>商品名称</span>
+        <span>{{data.productName}}</span>
       </div>
     </div>
   </router-link>
@@ -15,6 +15,12 @@
 export default {
   name: 'GoodsListItem',
   props: {
+    data: {
+      default: () => {
+        return {}
+      },
+      type: Object
+    }
   }
 }
 </script>

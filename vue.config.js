@@ -45,7 +45,7 @@ module.exports = {
     port: 8080,
     https: false,
     hotOnly: false,
-    proxy: 'http://192.168.19.17:91',
+    proxy: 'http://382072o0j1.51vip.biz/',
     before: app => { }
   },
   // 第三方插件配置

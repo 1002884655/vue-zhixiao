@@ -4,8 +4,8 @@
       <PageRefresh @Refresh="Refresh" @Infinite="Infinite">
         <div class="Content">
           <ul class="GoodsList">
-            <li v-for="(item, index) in 15" :key="index">
-              <GoodsListItem></GoodsListItem>
+            <li v-for="(item, index) in PageList" :key="index">
+              <GoodsListItem :data="item"></GoodsListItem>
             </li>
           </ul>
         </div>
@@ -17,6 +17,7 @@
 <script>
 import { createNamespacedHelpers } from 'vuex'
 const { mapState: mapUserState, mapActions: mapUserActions } = createNamespacedHelpers('user')
+const { mapActions: mapGoodsActions } = createNamespacedHelpers('goods')
 const MainPage = () => import('@/components/common/MainPage')
 const PageRefresh = () => import('@/components/common/PageRefresh')
 const GoodsListItem = () => import('@/components/shop/GoodsListItem')
@@ -29,6 +30,8 @@ export default {
   },
   data: () => {
     return {
+      PageList: [],
+      DataLock: false
     }
   },
   computed: {
@@ -37,20 +40,37 @@ export default {
     })
   },
   created () {
+    this.Init()
   },
   methods: {
     ...mapUserActions([
       ''
     ]),
+    ...mapGoodsActions([
+      'GetGoodsList'
+    ]),
+    Init () {
+      this.ToGetPageList()
+    },
+    ToGetPageList (done = () => { }) {
+      if (!this.DataLock) {
+        this.DataLock = true
+        this.GetGoodsList().then((res) => {
+          this.DataLock = false
+          this.PageList = res.data.productList || []
+          done()
+        }).catch((res) => {
+          this.$toast(res.data.retMsg)
+          this.DataLock = false
+          done()
+        })
+      }
+    },
     Refresh (done) {
-      window.setTimeout(() => {
-        done(true)
-      }, 1000)
+      this.ToGetPageList(() => { done(true) })
     },
     Infinite (done) {
-      window.setTimeout(() => {
-        done(true)
-      }, 1000)
+      done(true)
     }
   }
 }

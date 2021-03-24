@@ -9,17 +9,19 @@
             <div class="flex-h Line">
               <i class="iconfont iconzhanghao"></i>
               <div class="flex-item">
-                <input type="number" placeholder="请输入手机号">
+                <input type="number" placeholder="请输入手机号" v-model="Form.phone">
               </div>
             </div>
             <div class="flex-h Line">
-              <i class="iconfont iconmima"></i>
+              <i class="iconfont iconyanzhengma"></i>
               <div class="flex-item">
-                <input type="password" placeholder="请输入密码">
+                <input type="password" placeholder="请输入验证码" v-model="Form.smsCode">
               </div>
+              <a @click="ToGetMsgCode" v-if="CodeCounts === 60">获取验证码</a>
+              <span v-else>{{CodeCounts > 9 ? CodeCounts : `0${CodeCounts}`}}s</span>
             </div>
-            <a>登录</a>
-            <span>还没有账号？<a @click="IsReg = true">去注册</a></span>
+            <a @click="ToLogin" :class="{'active': Form.phone !== '' && Form.smsCode !== '' && !DataLock}">{{DataLock ? '正在登录...' : '登录'}}</a>
+            <span>还没有账号？<a @click="IsReg = true; Form.smsCode = ''">去注册</a></span>
           </div>
 
           <!-- 注册 -->
@@ -27,37 +29,25 @@
             <div class="flex-h Line">
               <i class="iconfont iconzhanghao"></i>
               <div class="flex-item">
-                <input type="number" placeholder="请输入手机号">
-              </div>
-            </div>
-            <div class="flex-h Line">
-              <i class="iconfont iconmima"></i>
-              <div class="flex-item">
-                <input type="password" placeholder="请输入密码">
-              </div>
-            </div>
-            <div class="flex-h Line">
-              <i class="iconfont iconmima"></i>
-              <div class="flex-item">
-                <input type="password" placeholder="请再次输入密码">
+                <input type="number" placeholder="请输入手机号" v-model="Form.phone">
               </div>
             </div>
             <div class="flex-h Line">
               <i class="iconfont iconyanzhengma"></i>
               <div class="flex-item">
-                <input type="text" placeholder="请输入验证码">
+                <input type="text" placeholder="请输入验证码" v-model="Form.smsCode">
               </div>
-              <a>获取验证码</a>
-              <span>59s</span>
+              <a @click="ToGetMsgCode" v-if="CodeCounts === 60">获取验证码</a>
+              <span v-else>{{CodeCounts > 9 ? CodeCounts : `0${CodeCounts}`}}s</span>
             </div>
             <div class="flex-h Line">
               <i class="iconfont iconyaoqingma"></i>
               <div class="flex-item">
-                <input type="text" placeholder="请输入邀请码">
+                <input type="text" placeholder="请输入邀请码" v-model="Form.recommendCode">
               </div>
             </div>
-            <a class="active">注册</a>
-            <span>已有账号？<a @click="IsReg = false">去登陆</a></span>
+            <a @click="ToReg" :class="{'active': Form.phone !== '' && Form.smsCode !== '' && !DataLock}">{{DataLock ? '正在提交数据...' : '注册'}}</a>
+            <span>已有账号？<a @click="IsReg = false; Form.smsCode = ''">去登陆</a></span>
           </div>
 
         </div>
@@ -77,9 +67,15 @@ export default {
   },
   data: () => {
     return {
-      IsReg: true,
+      IsReg: false,
       CodeTimer: null,
-      CodeCounts: 60
+      CodeCounts: 60,
+      DataLock: false,
+      Form: {
+        phone: '',
+        smsCode: '',
+        recommendCode: null
+      }
     }
   },
   computed: {
@@ -88,11 +84,74 @@ export default {
     })
   },
   created () {
+    this.Init()
   },
   methods: {
     ...mapUserActions([
-      ''
-    ])
+      'Login',
+      'GetMsgCode'
+    ]),
+    Init () {
+    },
+    ToGetMsgCode () { // 获取验证码
+      if (this.CodeCounts === 60) {
+        window.clearInterval(this.CodeTimer)
+        this.CodeCounts = 59
+        this.GetMsgCode({ data: { phone: this.Form.phone } }).then(() => {
+          this.$toast('验证码已发送')
+        })
+        this.CodeTimer = window.setInterval(() => {
+          if (this.CodeCounts >= 0) {
+            this.CodeCounts--
+          } else {
+            window.clearInterval(this.CodeTimer)
+            this.CodeCounts = 60
+          }
+        }, 1000)
+      }
+    },
+    ToLogin () { // 登录
+      if (this.Form.phone === '') {
+        this.$toast('请输入手机号')
+        return false
+      }
+      if (this.Form.smsCode === '') {
+        this.$toast('请输入验证码')
+        return false
+      }
+      if (!this.DataLock) {
+        this.DataLock = true
+        this.Login({ data: { phone: this.Form.phone, smsCode: this.Form.smsCode } }).then(() => {
+          this.$toast('登录成功')
+          this.DataLock = false
+        }).catch((res) => {
+          this.$toast(res.data.retMsg)
+          this.DataLock = false
+        })
+      }
+    },
+    ToReg () { // 注册
+      if (this.Form.phone === '') {
+        this.$toast('请输入手机号')
+        return false
+      }
+      if (this.Form.smsCode === '') {
+        this.$toast('请输入验证码')
+        return false
+      }
+      // if (this.Form.recommendCode === null) {
+      //   return false
+      // }
+      if (!this.DataLock) {
+        this.DataLock = true
+        this.Login({ data: { ...this.Form } }).then(() => {
+          this.DataLock = false
+        }).catch((res) => {
+          this.$toast(res.data.retMsg)
+          this.DataLock = false
+        })
+      }
+    }
   }
 }
 </script>

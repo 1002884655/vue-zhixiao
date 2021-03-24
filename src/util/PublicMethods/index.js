@@ -8,7 +8,7 @@ const ToolClass = {
       url: api.url + `${urlParams === null ? '' : `/${urlParams}`}`,
       ...opt
     }).then((res) => {
-      if (res.data.code - 0 === code - 0) {
+      if (res.data.retCode - 0 === code - 0) {
         if (commit !== null) {
           let CommitData = { data: res.data.data }
           if (hasOpt) {
