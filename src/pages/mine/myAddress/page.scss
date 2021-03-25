@@ -43,6 +43,9 @@
               font-size: 0.14rem;
               color: #ccc;
             }
+            > input {
+              text-align: right;
+            }
           }
           > span {
             display: block;

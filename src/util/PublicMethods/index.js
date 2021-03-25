@@ -10,7 +10,7 @@ const ToolClass = {
     }).then((res) => {
       if (res.data.retCode - 0 === code - 0) {
         if (commit !== null) {
-          let CommitData = { data: res.data.data }
+          let CommitData = { data: res.data }
           if (hasOpt) {
             CommitData.AxiosOpt = { ...opt }
           }

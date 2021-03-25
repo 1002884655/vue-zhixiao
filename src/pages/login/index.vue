@@ -139,9 +139,10 @@ export default {
         this.$toast('请输入验证码')
         return false
       }
-      // if (this.Form.recommendCode === null) {
-      //   return false
-      // }
+      if (this.Form.recommendCode === null) {
+        this.$toast('请输入邀请码')
+        return false
+      }
       if (!this.DataLock) {
         this.DataLock = true
         this.Login({ data: { ...this.Form } }).then(() => {

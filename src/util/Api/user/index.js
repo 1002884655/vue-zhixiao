@@ -14,6 +14,14 @@ const UserApi = {
   GetAreaList: { // 获取行政区域列表
     url: `${prefix}/zhixiao/area/getAreaList`,
     method: `post`
+  },
+  GetMyAddress: { // 获取我的收货地址
+    url: `${prefix}/zhixiao/user/queryMyAddress`,
+    method: `post`
+  },
+  SaveMyAddress: { // 保存我的收货地址
+    url: `${prefix}/zhixiao/user/updateAddress`,
+    method: `post`
   }
 }
 export default UserApi

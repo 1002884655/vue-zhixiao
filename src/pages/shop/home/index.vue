@@ -17,7 +17,7 @@
 <script>
 import { createNamespacedHelpers } from 'vuex'
 const { mapState: mapUserState, mapActions: mapUserActions } = createNamespacedHelpers('user')
-const { mapActions: mapGoodsActions } = createNamespacedHelpers('goods')
+const { mapState: mapGoodsState, mapActions: mapGoodsActions } = createNamespacedHelpers('goods')
 const MainPage = () => import('@/components/common/MainPage')
 const PageRefresh = () => import('@/components/common/PageRefresh')
 const GoodsListItem = () => import('@/components/shop/GoodsListItem')
@@ -37,6 +37,9 @@ export default {
   computed: {
     ...mapUserState({
       UserInfo: x => x.UserInfo
+    }),
+    ...mapGoodsState({
+      GoodsList: x => x.GoodsList
     })
   },
   created () {

@@ -11,9 +11,9 @@
                 <div class="BannerSwiper">
                   <div>
                     <swiper :options="SwiperOptions">
-                      <swiper-slide class="SwiperItem" v-for="(item, index) in 5" :key="index">
+                      <swiper-slide class="SwiperItem" v-for="(item, index) in 1" :key="index">
                         <div class="BannerItem">
-                          <img :src="null" class="centerLabel cover">
+                          <img :src="CurrentGoodsInfo.pictureUrl" class="centerLabel cover">
                         </div>
                       </swiper-slide>
                     </swiper>
@@ -23,13 +23,14 @@
 
                 <!-- title -->
                 <div class="Title flex-h">
-                  <span class="flex-item">商品名称</span>
+                  <span class="flex-item">{{CurrentGoodsInfo.productName}}</span>
                 </div>
 
                 <!-- 详情 -->
                 <div class="Detail">
                   <span class="Text">商品详情</span>
                   <img :src="null" width="100%">
+                  <pre>{{CurrentGoodsInfo.productDesc}}</pre>
                 </div>
 
               </div>
@@ -38,7 +39,7 @@
         </div>
         <div class="Bottom flex-h">
           <div class="flex-item">
-            <span>￥3000</span>
+            <span>￥{{CurrentGoodsInfo.price}}</span>
           </div>
           <a class="Btn active" @click="ToBuy">立即购买</a>
         </div>
@@ -52,6 +53,7 @@ import 'swiper/dist/css/swiper.css'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import { createNamespacedHelpers } from 'vuex'
 const { mapState: mapUserState, mapActions: mapUserActions } = createNamespacedHelpers('user')
+const { mapState: mapGoodsState, mapActions: mapGoodsActions } = createNamespacedHelpers('goods')
 const MainPage = () => import('@/components/common/MainPage')
 const PageRefresh = () => import('@/components/common/PageRefresh')
 export default {
@@ -64,6 +66,8 @@ export default {
   },
   data: () => {
     return {
+      DataLock: false,
+      CurrentGoodsInfo: {},
       SwiperOptions: {
         autoplay: true,
         pagination: {
@@ -75,16 +79,53 @@ export default {
   computed: {
     ...mapUserState({
       UserInfo: x => x.UserInfo
+    }),
+    ...mapGoodsState({
+      GoodsList: x => x.GoodsList
     })
   },
   created () {
+    this.Init()
   },
   methods: {
     ...mapUserActions([
       ''
     ]),
+    ...mapGoodsActions([
+      'GetGoodsList',
+      'CreateOrder'
+    ]),
+    Init () {
+      if (this.GoodsList.length) {
+        this.GoodsList.map((item) => {
+          if (item.id - 0 === this.$route.query.id - 0) {
+            this.CurrentGoodsInfo = { ...item }
+          }
+        })
+      } else {
+        this.GetGoodsList().then(() => {
+          this.GoodsList.map((item) => {
+            if (item.id - 0 === this.$route.query.id - 0) {
+              this.CurrentGoodsInfo = { ...item }
+            }
+          })
+        }).catch((res) => {
+          this.$toast(res.data.retMsg)
+        })
+      }
+    },
     ToBuy () {
-      this.$router.push({ name: 'submitOrder' })
+      if (!this.DataLock) {
+        this.DataLock = true
+        this.CreateOrder({ data: { productId: this.CurrentGoodsInfo.id, amount: this.CurrentGoodsInfo.price, num: 1 } }).then((res) => {
+          console.log(res)
+          this.DataLock = false
+        }).catch((res) => {
+          this.$toast(res.data.retMsg)
+          this.DataLock = false
+        })
+      }
+      // this.$router.push({ name: 'submitOrder' })
     },
     Refresh (done) {
       window.setTimeout(() => {
