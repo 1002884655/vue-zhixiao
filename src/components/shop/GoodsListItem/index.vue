@@ -1,7 +1,7 @@
 <template>
   <router-link tag="div" class="components GoodsListItem" :to="{ name: 'goodsDetail', query: { id: data.id } }">
     <div class="Img">
-      <img :src="data.pictureUrl" class="centerLabel cover" alt="">
+      <img :src="data.pictureList[0].url" class="centerLabel cover" alt="">
     </div>
     <div class="Title flex-h">
       <div class="flex-item">

@@ -110,7 +110,7 @@ export default {
             }
           })
         }).catch((res) => {
-          this.$toast(res.data.retMsg)
+          this.$toast(res.data.message)
         })
       }
     },
@@ -121,7 +121,7 @@ export default {
           console.log(res)
           this.DataLock = false
         }).catch((res) => {
-          this.$toast(res.data.retMsg)
+          this.$toast(res.data.message)
           this.DataLock = false
         })
       }

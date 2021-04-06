@@ -1,6 +1,6 @@
 <template>
   <div class="Page">
-    <MainPage>
+    <MainPage @UserInfoChange="UserInfoChange">
       <div class="PageContainer flex-v">
         <div class="flex-item">
           <div>
@@ -15,17 +15,17 @@
               </div>
               <div class="flex-h" @click="ShowStatePicker = true">
                 <span>省份</span>
-                <span class="flex-item">{{CurrentStateItem.cName ? CurrentStateItem.cName : '请选择省份'}}</span>
+                <span class="flex-item">{{CurrentStateItem.cname ? CurrentStateItem.cname : '请选择省份'}}</span>
                 <i class="iconfont iconjiantouright"></i>
               </div>
               <div class="flex-h" @click="ShowCityPicker = true">
                 <span>城市</span>
-                <span class="flex-item">{{CurrentCityItem.cName ? CurrentCityItem.cName : '请选择城市'}}</span>
+                <span class="flex-item">{{CurrentCityItem.cname ? CurrentCityItem.cname : '请选择城市'}}</span>
                 <i class="iconfont iconjiantouright"></i>
               </div>
               <div class="flex-h" @click="ShowCountyPicker = true">
                 <span>区/县</span>
-                <span class="flex-item">{{CurrentCountyItem.cName ? CurrentCountyItem.cName : '请选择区/县'}}</span>
+                <span class="flex-item">{{CurrentCountyItem.cname ? CurrentCountyItem.cname : '请选择区/县'}}</span>
                 <i class="iconfont iconjiantouright"></i>
               </div>
               <div class="flex-h">
@@ -43,13 +43,13 @@
           <a class="flex-item" :class="{'active': !DataLock}" @click="Submit">确认修改</a>
         </div>
         <van-popup v-model="ShowStatePicker" round position="bottom">
-          <van-picker show-toolbar :columns="StateList" value-key="cName" @cancel="ShowStatePicker = false" @confirm="StateConfirm" />
+          <van-picker show-toolbar :columns="StateList" value-key="cname" @cancel="ShowStatePicker = false" @confirm="StateConfirm" />
         </van-popup>
         <van-popup v-model="ShowCityPicker" round position="bottom">
-          <van-picker show-toolbar :columns="CityList" value-key="cName" @cancel="ShowCityPicker = false" @confirm="CityConfirm" />
+          <van-picker show-toolbar :columns="CityList" value-key="cname" @cancel="ShowCityPicker = false" @confirm="CityConfirm" />
         </van-popup>
         <van-popup v-model="ShowCountyPicker" round position="bottom">
-          <van-picker show-toolbar :columns="CountyList" value-key="cName" @cancel="ShowCountyPicker = false" @confirm="CountyConfirm" />
+          <van-picker show-toolbar :columns="CountyList" value-key="cname" @cancel="ShowCountyPicker = false" @confirm="CountyConfirm" />
         </van-popup>
       </div>
     </MainPage>
@@ -101,7 +101,6 @@ export default {
     })
   },
   created () {
-    this.Init()
   },
   methods: {
     ...mapUserActions([
@@ -109,10 +108,15 @@ export default {
       'GetMyAddress',
       'SaveMyAddress'
     ]),
+    UserInfoChange () {
+      if (this.UserInfo.id - 0) {
+        this.Init()
+      }
+    },
     Init () {
       this.GetMyAddress().then((res) => {
         for (let key in res.data) {
-          if (key !== 'retCode' && key !== 'retMsg') {
+          if (key !== 'code' && key !== 'message') {
             this.Form[key] = res.data[key]
           }
         }
@@ -123,25 +127,26 @@ export default {
     },
     AddressInit () {
       this.GetAreaList({ data: { type: 0 } }).then((stateRes) => {
-        this.StateList = stateRes.data.areaList || []
+        this.StateList = stateRes.data.data.areaList || []
         if (this.Form.proviceId !== '') {
           this.StateList.map((item) => {
             if (this.Form.proviceId - 0 === item.id - 0) {
               this.CurrentStateItem = { ...item }
             }
           })
-          if (this.CurrentStateItem.cName) {
+          if (this.CurrentStateItem.cname) {
             this.GetAreaList({ data: { type: 1, id: this.CurrentStateItem.id } }).then((cityRes) => {
-              this.CityList = cityRes.data.areaList || []
+              this.CityList = cityRes.data.data.areaList || []
+              console.log(cityRes.data.data)
               if (this.Form.cityId !== '') {
                 this.CityList.map((item) => {
                   if (this.Form.cityId - 0 === item.id - 0) {
                     this.CurrentCityItem = { ...item }
                   }
                 })
-                if (this.CurrentCityItem.cName) {
+                if (this.CurrentCityItem.cname) {
                   this.GetAreaList({ data: { type: 2, id: this.CurrentCityItem.id } }).then((countyRes) => {
-                    this.CountyList = countyRes.data.areaList || []
+                    this.CountyList = countyRes.data.data.areaList || []
                     this.CountyList.map((item) => {
                       if (this.Form.countyId - 0 === item.id - 0) {
                         this.CurrentCountyItem = { ...item }
@@ -159,9 +164,10 @@ export default {
       if (!this.DataLock) {
         this.DataLock = true
         this.SaveMyAddress({ data: { ...this.Form } }).then(() => {
+          this.$toast('修改成功')
           this.DataLock = false
         }).catch((res) => {
-          this.$toast(res.data.retMsg)
+          this.$toast(res.data.message)
           this.DataLock = false
         })
       }
@@ -171,13 +177,13 @@ export default {
       if (e !== undefined && e.id !== this.CurrentStateItem.id) {
         this.CurrentStateItem = { ...e }
         this.Form.proviceId = e.id
-        this.Form.proviceName = e.cName
+        this.Form.proviceName = e.cname
         this.CurrentCityItem = {}
         this.CityList = []
         this.CurrentCountyItem = {}
         this.CountyList = []
         this.GetAreaList({ data: { type: 1, id: e.id } }).then((res) => {
-          this.CityList = res.data.areaList || []
+          this.CityList = res.data.data.areaList || []
         })
       }
     },
@@ -186,11 +192,11 @@ export default {
       if (e !== undefined && e.id !== this.CurrentCityItem.id) {
         this.CurrentCityItem = { ...e }
         this.Form.cityId = e.id
-        this.Form.cityName = e.cName
+        this.Form.cityName = e.cname
         this.CurrentCountyItem = {}
         this.CountyList = []
         this.GetAreaList({ data: { type: 2, id: e.id } }).then((res) => {
-          this.CountyList = res.data.areaList || []
+          this.CountyList = res.data.data.areaList || []
         })
       }
     },
@@ -198,7 +204,7 @@ export default {
       this.ShowCountyPicker = false
       this.CurrentCountyItem = { ...e }
       this.Form.countyId = e.id
-      this.Form.countyName = e.cName
+      this.Form.countyName = e.cname
     }
   }
 }

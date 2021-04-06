@@ -6,9 +6,12 @@ const ToolClass = {
     Axios({
       method: api.method,
       url: api.url + `${urlParams === null ? '' : `/${urlParams}`}`,
-      ...opt
+      ...opt,
+      headers: {
+        authorization: window.localStorage.zhixiaotoken || null
+      }
     }).then((res) => {
-      if (res.data.retCode - 0 === code - 0) {
+      if (res.data.code - 0 === code - 0) {
         if (commit !== null) {
           let CommitData = { data: res.data }
           if (hasOpt) {

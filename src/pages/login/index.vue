@@ -99,15 +99,18 @@ export default {
         this.CodeCounts = 59
         this.GetMsgCode({ data: { phone: this.Form.phone } }).then(() => {
           this.$toast('验证码已发送')
+          this.CodeTimer = window.setInterval(() => {
+            if (this.CodeCounts >= 0) {
+              this.CodeCounts--
+            } else {
+              window.clearInterval(this.CodeTimer)
+              this.CodeCounts = 60
+            }
+          }, 1000)
+        }).catch((res) => {
+          this.CodeCounts = 60
+          this.$toast(res.data.message)
         })
-        this.CodeTimer = window.setInterval(() => {
-          if (this.CodeCounts >= 0) {
-            this.CodeCounts--
-          } else {
-            window.clearInterval(this.CodeTimer)
-            this.CodeCounts = 60
-          }
-        }, 1000)
       }
     },
     ToLogin () { // 登录
@@ -121,11 +124,13 @@ export default {
       }
       if (!this.DataLock) {
         this.DataLock = true
-        this.Login({ data: { phone: this.Form.phone, smsCode: this.Form.smsCode } }).then(() => {
+        this.Login({ data: { phone: this.Form.phone, smsCode: this.Form.smsCode } }).then((res) => {
           this.$toast('登录成功')
+          window.localStorage.zhixiaotoken = res.data.data.token
           this.DataLock = false
+          this.$router.push({ name: 'shopHome' })
         }).catch((res) => {
-          this.$toast(res.data.retMsg)
+          this.$toast(res.data.message)
           this.DataLock = false
         })
       }
@@ -148,7 +153,7 @@ export default {
         this.Login({ data: { ...this.Form } }).then(() => {
           this.DataLock = false
         }).catch((res) => {
-          this.$toast(res.data.retMsg)
+          this.$toast(res.data.message)
           this.DataLock = false
         })
       }

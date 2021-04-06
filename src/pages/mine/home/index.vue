@@ -1,6 +1,6 @@
 <template>
   <div class="Page">
-    <MainPage :HideMainTab="false" :HideMainHeader="true" :MainTabActiveId="2">
+    <MainPage :HideMainTab="false" :HideMainHeader="true" :MainTabActiveId="2" @UserInfoChange="UserInfoChange">
       <div class="Content flex-v">
 
         <!-- 顶部 -->
@@ -8,12 +8,12 @@
           <div class="centerLabel">
             <div class="flex-h">
               <div class="UserIcon">
-                <img :src="null" class="centerLabel cover">
+                <img :src="UserInfo.headUrl" class="centerLabel cover">
               </div>
-              <router-link :to="{ name: 'login' }">登录/注册</router-link>
-              <div class="flex-item">
-                <span>用户昵称</span>
-                <span>18811111111</span>
+              <router-link :to="{ name: 'login' }" v-if="!(UserInfo.id - 0)">登录/注册</router-link>
+              <div class="flex-item" v-else>
+                <span>{{UserInfo.nickname}}</span>
+                <span>{{UserInfo.phone}}</span>
               </div>
             </div>
           </div>
@@ -133,12 +133,24 @@ export default {
   },
   methods: {
     ...mapUserActions([
-      ''
+      'GetUserInfo'
     ]),
+    UserInfoChange () {
+      if (!(this.UserInfo.id - 0)) {
+        this.Init()
+      }
+    },
+    Init (done = () => { }) {
+      if (window.localStorage.zhixiaotoken !== undefined) {
+        this.GetUserInfo().then(() => {
+          done()
+        }).catch(() => {
+          done()
+        })
+      }
+    },
     Refresh (done) {
-      window.setTimeout(() => {
-        done(true)
-      }, 1000)
+      this.Init(done)
     },
     Infinite (done) {
       done(true)

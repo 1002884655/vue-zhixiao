@@ -56,6 +56,7 @@ export default {
   },
   created () {
     this.Title = this.$route.meta.title || ''
+    this.Init()
   },
   mounted () {
     this.$nextTick(() => {
@@ -63,12 +64,22 @@ export default {
   },
   methods: {
     ...mapMutations([
-      'EditHideMainTab',
-      'EditMainTabActiveId'
+      ''
     ]),
     ...mapUserActions([
-      'Login'
-    ])
+      'GetUserInfo'
+    ]),
+    Init () {
+      if (window.localStorage.zhixiaotoken !== undefined && !(this.UserInfo.id - 0)) {
+        this.GetUserInfo().then(() => {
+          this.$emit('UserInfoChange')
+        }).catch(() => {
+          this.$emit('UserInfoChange')
+        })
+      } else {
+        this.$emit('UserInfoChange')
+      }
+    }
   }
 }
 </script>

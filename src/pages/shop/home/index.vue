@@ -4,7 +4,7 @@
       <PageRefresh @Refresh="Refresh" @Infinite="Infinite">
         <div class="Content">
           <ul class="GoodsList">
-            <li v-for="(item, index) in PageList" :key="index">
+            <li v-for="(item, index) in GoodsList" :key="index">
               <GoodsListItem :data="item"></GoodsListItem>
             </li>
           </ul>
@@ -17,7 +17,7 @@
 <script>
 import { createNamespacedHelpers } from 'vuex'
 const { mapState: mapUserState, mapActions: mapUserActions } = createNamespacedHelpers('user')
-const { mapState: mapGoodsState, mapActions: mapGoodsActions } = createNamespacedHelpers('goods')
+const { mapState: mapGoodsState, mapActions: mapGoodsActions, mapMutations: mapGoodsMutations } = createNamespacedHelpers('goods')
 const MainPage = () => import('@/components/common/MainPage')
 const PageRefresh = () => import('@/components/common/PageRefresh')
 const GoodsListItem = () => import('@/components/shop/GoodsListItem')
@@ -30,7 +30,6 @@ export default {
   },
   data: () => {
     return {
-      PageList: [],
       DataLock: false
     }
   },
@@ -52,24 +51,27 @@ export default {
     ...mapGoodsActions([
       'GetGoodsList'
     ]),
+    ...mapGoodsMutations([
+      'EmptyGoodsList'
+    ]),
     Init () {
       this.ToGetPageList()
     },
     ToGetPageList (done = () => { }) {
       if (!this.DataLock) {
         this.DataLock = true
-        this.GetGoodsList().then((res) => {
+        this.GetGoodsList().then(() => {
           this.DataLock = false
-          this.PageList = res.data.productList || []
           done()
         }).catch((res) => {
-          this.$toast(res.data.retMsg)
+          this.$toast(res.data.message)
           this.DataLock = false
           done()
         })
       }
     },
     Refresh (done) {
+      this.EmptyGoodsList()
       this.ToGetPageList(() => { done(true) })
     },
     Infinite (done) {
