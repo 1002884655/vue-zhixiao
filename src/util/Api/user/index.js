@@ -19,10 +19,6 @@ const UserApi = {
     url: `${prefix}/app/area/getAreaList`,
     method: `post`
   },
-  GetMyAddress: { // 获取我的收货地址
-    url: `${prefix}/app/user/queryMyAddress`,
-    method: `post`
-  },
   SaveMyAddress: { // 保存我的收货地址
     url: `${prefix}/app/user/updateAddress`,
     method: `post`

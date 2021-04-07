@@ -7,7 +7,7 @@
             <div class="Content">
               <div class="flex-h">
                 <span>姓名</span>
-                <input type="text" class="flex-item" v-model="Form.nickName" placeholder="请输入姓名">
+                <input type="text" class="flex-item" v-model="Form.nickname" placeholder="请输入姓名">
               </div>
               <div class="flex-h">
                 <span>手机号</span>
@@ -59,7 +59,7 @@
 <script>
 import { Picker, Popup } from 'vant'
 import { createNamespacedHelpers } from 'vuex'
-const { mapState: mapUserState, mapActions: mapUserActions } = createNamespacedHelpers('user')
+const { mapState: mapUserState, mapActions: mapUserActions, mapMutations: mapUserMutations } = createNamespacedHelpers('user')
 const MainPage = () => import('@/components/common/MainPage')
 export default {
   name: 'index',
@@ -73,7 +73,7 @@ export default {
     return {
       Form: {
         address: '',
-        nickName: '',
+        nickname: '',
         mobile: '',
         postCode: '',
         proviceId: '',
@@ -105,8 +105,10 @@ export default {
   methods: {
     ...mapUserActions([
       'GetAreaList',
-      'GetMyAddress',
       'SaveMyAddress'
+    ]),
+    ...mapUserMutations([
+      'UpdateUserInfo'
     ]),
     UserInfoChange () {
       if (this.UserInfo.id - 0) {
@@ -114,16 +116,12 @@ export default {
       }
     },
     Init () {
-      this.GetMyAddress().then((res) => {
-        for (let key in res.data) {
-          if (key !== 'code' && key !== 'message') {
-            this.Form[key] = res.data[key]
-          }
+      for (let key in this.Form) {
+        if (this.UserInfo[key]) {
+          this.Form[key] = this.UserInfo[key]
         }
-        this.AddressInit()
-      }).catch(() => {
-        this.AddressInit()
-      })
+      }
+      this.AddressInit()
     },
     AddressInit () {
       this.GetAreaList({ data: { type: 0 } }).then((stateRes) => {
@@ -137,7 +135,6 @@ export default {
           if (this.CurrentStateItem.cname) {
             this.GetAreaList({ data: { type: 1, id: this.CurrentStateItem.id } }).then((cityRes) => {
               this.CityList = cityRes.data.data.areaList || []
-              console.log(cityRes.data.data)
               if (this.Form.cityId !== '') {
                 this.CityList.map((item) => {
                   if (this.Form.cityId - 0 === item.id - 0) {
@@ -163,8 +160,9 @@ export default {
     Submit () {
       if (!this.DataLock) {
         this.DataLock = true
-        this.SaveMyAddress({ data: { ...this.Form } }).then(() => {
+        this.SaveMyAddress({ data: { ...this.Form, nickName: this.Form.nickname } }).then((res) => {
           this.$toast('修改成功')
+          this.UpdateUserInfo(res)
           this.DataLock = false
         }).catch((res) => {
           this.$toast(res.data.message)

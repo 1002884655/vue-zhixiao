@@ -33,11 +33,6 @@ export default {
         ToolClass.Axios({ success, error, api: Api.User.GetAreaList, context, code: 1000, opt: payload })
       })
     },
-    GetMyAddress (context, payload) { // 获取我的收货地址
-      return new Promise((success, error) => {
-        ToolClass.Axios({ success, error, api: Api.User.GetMyAddress, context, code: 1000, opt: payload })
-      })
-    },
     SaveMyAddress (context, payload) { // 保存我的收货地址
       return new Promise((success, error) => {
         ToolClass.Axios({ success, error, api: Api.User.SaveMyAddress, context, code: 1000, opt: payload })

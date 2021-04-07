@@ -17,8 +17,8 @@
     }
     > .centerLabel {
       > .QrCode {
-        width: 2rem;
-        height: 2rem;
+        width: 200px;
+        height: 200px;
         position: relative;
         overflow: hidden;
         background: #eee;
@@ -30,9 +30,9 @@
         white-space: nowrap;
         font-size: 0;
         > span {
-          display: inline-block;
-          vertical-align: middle;
-          font-size: 0.2rem;
+          display: block;
+          text-align: center;
+          font-size: 0.13rem;
           line-height: 0.3rem;
           color: #e00f3a;
           font-weight: bold;

@@ -11,9 +11,9 @@
                 <div class="BannerSwiper">
                   <div>
                     <swiper :options="SwiperOptions">
-                      <swiper-slide class="SwiperItem" v-for="(item, index) in 1" :key="index">
+                      <swiper-slide class="SwiperItem" v-for="(item, index) in CurrentGoodsInfo.pictureList" :key="index">
                         <div class="BannerItem">
-                          <img :src="CurrentGoodsInfo.pictureUrl" class="centerLabel cover">
+                          <img :src="`http://192.168.31.72:8080${item.url}`" class="centerLabel cover">
                         </div>
                       </swiper-slide>
                     </swiper>
@@ -117,15 +117,14 @@ export default {
     ToBuy () {
       if (!this.DataLock) {
         this.DataLock = true
-        this.CreateOrder({ data: { productId: this.CurrentGoodsInfo.id, amount: this.CurrentGoodsInfo.price, num: 1 } }).then((res) => {
-          console.log(res)
+        this.CreateOrder({ data: { productId: this.CurrentGoodsInfo.id, num: 1 } }).then((res) => {
           this.DataLock = false
+          this.$router.push({ name: 'submitOrder', query: { id: res.data.data.id } })
         }).catch((res) => {
           this.$toast(res.data.message)
           this.DataLock = false
         })
       }
-      // this.$router.push({ name: 'submitOrder' })
     },
     Refresh (done) {
       window.setTimeout(() => {
