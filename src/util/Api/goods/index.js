@@ -10,6 +10,10 @@ const GoodsApi = {
   CreateOrder: { // 创建订单
     url: `${prefix}/app/order/createOrder`,
     method: `post`
+  },
+  GetOrderDetail: { // 获取订单详情
+    url: `${prefix}/app/order/detail`,
+    method: `get`
   }
 }
 export default GoodsApi

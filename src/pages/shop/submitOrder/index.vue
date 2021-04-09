@@ -1,10 +1,10 @@
 <template>
   <div class="Page">
-    <MainPage>
+    <MainPage @UserInfoChange="Init">
       <div class="PageContainer flex-v">
         <router-link class="Address flex-h" :to="{ name: 'myAddress' }">
           <span>收货地址：</span>
-          <span class="flex-item">请填写收货地址</span>
+          <span class="flex-item">{{UserInfo.proviceName === undefined || UserInfo.proviceName === '' || UserInfo.proviceName === null ? `请填写收货地址` : `${UserInfo.proviceName} ${UserInfo.cityName} ${UserInfo.countyName} ${UserInfo.address}`}}</span>
           <i class="iconfont iconjiantouright"></i>
         </router-link>
         <div class="flex-item">
@@ -13,16 +13,20 @@
 
               <!-- 商品列表 -->
               <ul class="GoodsList">
-                <li v-for="(item, index) in 3" :key="index" class="flex-h">
+                <li class="flex-h">
                   <div class="Img">
-                    <img :src="null" class="centerLabel cover">
+                    <img :src="CurrentGoodsInfo.pictureList ? `http://192.168.31.72:8080${CurrentGoodsInfo.pictureList[0].url}` : null" class="centerLabel cover">
                   </div>
                   <div class="flex-item">
-                    <span>商品名称</span>
+                    <span>{{CurrentGoodsInfo.productName}}</span>
                   </div>
                   <div class="More">
-                    <span>￥3000</span>
-                    <span>x1</span>
+                    <span>￥{{CurrentGoodsInfo.price}}</span>
+                    <div class="flex-h">
+                      <a @click="GoodsCounts = GoodsCounts > 1 ? GoodsCounts - 1 : 1"></a>
+                      <span class="flex-item">{{GoodsCounts}}</span>
+                      <a @click="GoodsCounts++"></a>
+                    </div>
                   </div>
                 </li>
               </ul>
@@ -30,7 +34,7 @@
               <!-- 总价 -->
               <div class="TotalPrice">
                 <span>应付款：</span>
-                <span>￥3000</span>
+                <span>￥{{CurrentGoodsInfo.price ? GoodsCounts * CurrentGoodsInfo.price : 0}}</span>
               </div>
 
             </div>
@@ -47,6 +51,7 @@
 <script>
 import { createNamespacedHelpers } from 'vuex'
 const { mapState: mapUserState, mapActions: mapUserActions } = createNamespacedHelpers('user')
+const { mapState: mapGoodsState, mapActions: mapGoodsActions } = createNamespacedHelpers('goods')
 const MainPage = () => import('@/components/common/MainPage')
 export default {
   name: 'index',
@@ -55,11 +60,17 @@ export default {
   },
   data: () => {
     return {
+      DataLock: false,
+      CurrentGoodsInfo: {},
+      GoodsCounts: 1
     }
   },
   computed: {
     ...mapUserState({
       UserInfo: x => x.UserInfo
+    }),
+    ...mapGoodsState({
+      GoodsList: x => x.GoodsList
     })
   },
   created () {
@@ -68,8 +79,40 @@ export default {
     ...mapUserActions([
       ''
     ]),
+    ...mapGoodsActions([
+      'GetGoodsList',
+      'CreateOrder'
+    ]),
+    Init () {
+      if (this.GoodsList.length) {
+        this.GoodsList.map((item) => {
+          if (item.id - 0 === this.$route.query.id - 0) {
+            this.CurrentGoodsInfo = { ...item }
+          }
+        })
+      } else {
+        this.GetGoodsList().then(() => {
+          this.GoodsList.map((item) => {
+            if (item.id - 0 === this.$route.query.id - 0) {
+              this.CurrentGoodsInfo = { ...item }
+            }
+          })
+        }).catch((res) => {
+          this.$toast(res.data.message)
+        })
+      }
+    },
     ToPay () {
-      this.$router.push({ name: 'orderDetail' })
+      if (!this.DataLock) {
+        this.DataLock = true
+        this.CreateOrder({ data: { productId: this.CurrentGoodsInfo.id, num: this.GoodsCounts } }).then((res) => {
+          this.DataLock = false
+          this.$router.push({ name: 'orderDetail', query: { id: res.data.data.id } })
+        }).catch((res) => {
+          this.$toast(res.data.message)
+          this.DataLock = false
+        })
+      }
     }
   }
 }

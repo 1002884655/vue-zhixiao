@@ -1,6 +1,6 @@
 <template>
   <div class="Page">
-    <MainPage>
+    <MainPage @UserInfoChange="Init">
       <PageRefresh @Refresh="Refresh" @Infinite="Infinite">
         <div class="Content">
           <div v-for="(item, index) in 10" :key="index" class="OrderList">
@@ -47,6 +47,13 @@ export default {
   },
   data: () => {
     return {
+      DataLock: false,
+      PageList: [],
+      PageData: {
+        pageSize: 10000,
+        pageNum: 1
+      },
+      HasNextPage: true
     }
   },
   computed: {
@@ -58,17 +65,40 @@ export default {
   },
   methods: {
     ...mapUserActions([
-      ''
+      'GetMyOrderList'
     ]),
+    Init (done = () => { }) {
+      this.PageData.pageNum = 1
+      this.PageList = []
+      this.ToGetPageList(done)
+    },
+    ToGetPageList (done = () => { }) {
+      if (!this.DataLock) {
+        this.DataLock = true
+        this.GetMyOrderList({ params: { ...this.PageData } }).then((res) => {
+          let Arr = res.data.data || []
+          Arr.map((item) => {
+            this.PageList.push(item)
+          })
+          this.DataLock = false
+          done()
+        }).catch((res) => {
+          this.$toast(res.data.message)
+          this.DataLock = false
+          done()
+        })
+      }
+    },
     Refresh (done) {
-      window.setTimeout(() => {
-        done(true)
-      }, 1000)
+      this.Init(done)
     },
     Infinite (done) {
-      window.setTimeout(() => {
-        done(true)
-      }, 1000)
+      if (this.HasNextPage) {
+        this.PageData.pageNum += 1
+        this.ToGetPageList(done)
+      } else {
+        done()
+      }
     }
   }
 }

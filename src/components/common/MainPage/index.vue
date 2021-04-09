@@ -70,12 +70,18 @@ export default {
       'GetUserInfo'
     ]),
     Init () {
-      if (window.localStorage.zhixiaotoken !== undefined && !(this.UserInfo.id - 0)) {
-        this.GetUserInfo().then(() => {
-          this.$emit('UserInfoChange')
-        }).catch(() => {
-          this.$emit('UserInfoChange')
-        })
+      if (!(this.UserInfo.id - 0)) {
+        if (window.localStorage.zhixiaotoken !== undefined) {
+          this.GetUserInfo().then(() => {
+            this.$emit('UserInfoChange')
+          }).catch((res) => {
+            this.$toast(res.data.message)
+            // this.$emit('UserInfoChange')
+          })
+        } else {
+          this.$router.push({ name: 'login' })
+          // this.$emit('UserInfoChange')
+        }
       } else {
         this.$emit('UserInfoChange')
       }

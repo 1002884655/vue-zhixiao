@@ -25,6 +25,11 @@ export default {
       return new Promise((success, error) => {
         ToolClass.Axios({ success, error, api: Api.Goods.CreateOrder, context, code: 1000, opt: payload })
       })
+    },
+    GetOrderDetail (context, payload) { // 获取订单详情
+      return new Promise((success, error) => {
+        ToolClass.Axios({ success, error, api: Api.Goods.GetOrderDetail, context, code: 1000, urlParams: payload.urlParams })
+      })
     }
   }
 }

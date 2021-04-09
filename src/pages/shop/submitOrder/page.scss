@@ -21,6 +21,9 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        &:nth-child(2) {
+          text-align: right;
+        }
       }
       > i {
         font-size: 0.14rem;
@@ -82,6 +85,40 @@
                   &:first-child {
                     font-weight: bold;
                     color: #e00f3a;
+                  }
+                }
+                > div {
+                  min-width: 0.7rem;
+                  margin-top: 0.1rem;
+                  >span {
+                    font-size: 0.14rem;
+                    text-align: center;
+                  }
+                  > a {
+                    font-size: 0.16rem;
+                    line-height: 0.22rem;
+                    height: 0.22rem;
+                    width: 0.22rem;
+                    box-sizing: border-box;
+                    border: 1px solid #ccc;
+                    text-align: center;
+                    position: relative;
+                    overflow: hidden;
+                    &::after {
+                      content: "+";
+                      display: inline-block;
+                      position: absolute;
+                      left: 50%;
+                      top: 50%;
+                      transform: translate(-50%, -50%);
+                      -webkit-transform: translate(-50%, -50%);
+                      font-size: 0.16rem;
+                    }
+                    &:nth-child(1) {
+                      &::after {
+                        content: "-";
+                      }
+                    }
                   }
                 }
               }

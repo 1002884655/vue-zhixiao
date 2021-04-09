@@ -22,6 +22,10 @@ const UserApi = {
   SaveMyAddress: { // 保存我的收货地址
     url: `${prefix}/app/user/updateAddress`,
     method: `post`
+  },
+  GetMyOrderList: { // 获取我的订单列表
+    url: `${prefix}/app/order/queryUserOrderList`,
+    method: `get`
   }
 }
 export default UserApi

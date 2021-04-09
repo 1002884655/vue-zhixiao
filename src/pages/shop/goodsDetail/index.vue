@@ -1,6 +1,6 @@
 <template>
   <div class="Page">
-    <MainPage>
+    <MainPage @UserInfoChange="Init">
       <div class="GoodsDetailContainer flex-v">
         <div class="flex-item">
           <div>
@@ -85,7 +85,6 @@ export default {
     })
   },
   created () {
-    this.Init()
   },
   methods: {
     ...mapUserActions([
@@ -115,16 +114,7 @@ export default {
       }
     },
     ToBuy () {
-      if (!this.DataLock) {
-        this.DataLock = true
-        this.CreateOrder({ data: { productId: this.CurrentGoodsInfo.id, num: 1 } }).then((res) => {
-          this.DataLock = false
-          this.$router.push({ name: 'submitOrder', query: { id: res.data.data.id } })
-        }).catch((res) => {
-          this.$toast(res.data.message)
-          this.DataLock = false
-        })
-      }
+      this.$router.push({ name: 'submitOrder', query: { id: this.CurrentGoodsInfo.id } })
     },
     Refresh (done) {
       window.setTimeout(() => {

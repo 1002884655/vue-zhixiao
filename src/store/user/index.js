@@ -37,6 +37,11 @@ export default {
       return new Promise((success, error) => {
         ToolClass.Axios({ success, error, api: Api.User.SaveMyAddress, context, code: 1000, opt: payload })
       })
+    },
+    GetMyOrderList (context, payload) { // 获取我的订单列表
+      return new Promise((success, error) => {
+        ToolClass.Axios({ success, error, api: Api.User.GetMyOrderList, context, code: 1000, opt: payload })
+      })
     }
   }
 }
