@@ -3,29 +3,32 @@
     <MainPage @UserInfoChange="Init">
       <PageRefresh @Refresh="Refresh" @Infinite="Infinite">
         <div class="Content">
-          <div v-for="(item, index) in 10" :key="index" class="OrderList">
+          <div v-for="(item, index) in PageList" :key="index" class="OrderList">
             <div class="Top flex-h">
-              <span class="flex-item">NO.123456789</span>
-              <span>2020-08-08 08:08:08</span>
+              <span class="flex-item">{{item.orderId}}</span>
+              <span>{{ToolClass.DateFormatYear(item.createOrderTime)}}</span>
             </div>
-            <router-link v-for="(subItem, subIndex) in 3" :key="subIndex" class="GoodsList flex-h" :to="{ name: 'orderDetail' }">
+            <router-link class="GoodsList flex-h" :to="{ name: 'orderDetail', query: { id: item.orderId } }">
               <div class="Img">
                 <img :src="null" class="centerLabel cover">
               </div>
               <div class="flex-item flex-v">
                 <div class="flex-item flex-h">
-                  <span class="flex-item">商品名称</span>
+                  <span class="flex-item">{{item.productName}}</span>
                   <div>
-                    <span>￥3000</span>
-                    <span>x1</span>
+                    <span>￥{{item.productPrice}}</span>
+                    <span>x{{item.num}}</span>
                   </div>
                 </div>
               </div>
             </router-link>
             <div class="Status">
-              <span>实付款：<em>￥3000</em></span>
-              <a class="Btn">确认收货</a>
-              <span class="Text">已完成</span>
+              <span>实付款：<em>￥{{Math.abs(item.amount)}}</em></span>
+              <a class="Btn" v-if="item.status - 0 === 2">确认收货</a>
+              <span class="Text" v-if="item.status - 0 === -1">支付失败</span>
+              <span class="Text" v-if="item.status - 0 === 0">待支付</span>
+              <span class="Text" v-if="item.status - 0 === 1">待发货</span>
+              <span class="Text" v-if="item.status - 0 === 3">已完成</span>
             </div>
           </div>
         </div>

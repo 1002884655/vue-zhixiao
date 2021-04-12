@@ -44,19 +44,19 @@
                 </div>
                 <div class="flex-h">
                   <span>快递单号：</span>
-                  <span class="flex-item">123456789</span>
+                  <span class="flex-item">{{OrderInfo.expressNum}}</span>
                 </div>
                 <div class="flex-h">
                   <span>订单状态：</span>
-                  <span class="flex-item">{{OrderInfo.status ? '已完成' : '未完成'}}</span>
+                  <span class="flex-item">{{OrderInfo.status - 0 === 0 ? '待付款' : OrderInfo.status - 0 === 1 ? '待发货' : OrderInfo.status - 0 === 2 ? '已发货' : OrderInfo.status - 0 === 3 ? '已完成' : '支付失败'}}</span>
                 </div>
               </div>
 
             </div>
           </div>
         </div>
-        <div class="Bottom flex-h">
-          <a class="flex-item active">确认收货</a>
+        <div class="Bottom flex-h" v-if="OrderInfo.status - 0 === 0 || OrderInfo.status - 0 === 2">
+          <a class="flex-item active">{{OrderInfo.status - 0 === 0 ? '去付款' : OrderInfo.status - 0 === 2 ? '确认收货' : ''}}</a>
         </div>
       </div>
     </MainPage>
