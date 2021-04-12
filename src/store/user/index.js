@@ -42,6 +42,16 @@ export default {
       return new Promise((success, error) => {
         ToolClass.Axios({ success, error, api: Api.User.GetMyOrderList, context, code: 1000, opt: payload })
       })
-    }
+    },
+    GetUserTransInfo (context, payload) { // 获取用户交易数据
+      return new Promise((success, error) => {
+        ToolClass.Axios({ success, error, api: Api.User.GetUserTransInfo, context, code: 1000, opt: payload })
+      })
+    },
+    GetUserAccountRecords (context, payload) { // 获取用户交易流水
+      return new Promise((success, error) => {
+        ToolClass.Axios({ success, error, api: Api.User.GetUserAccountRecords, context, code: 1000, opt: payload })
+      })
+    },
   }
 }

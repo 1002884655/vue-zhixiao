@@ -97,8 +97,9 @@ export default {
     },
     Infinite (done) {
       if (this.HasNextPage) {
-        this.PageData.pageNum += 1
-        this.ToGetPageList(done)
+        // this.PageData.pageNum += 1
+        // this.ToGetPageList(done)
+        done()
       } else {
         done()
       }

@@ -26,6 +26,14 @@ const UserApi = {
   GetMyOrderList: { // 获取我的订单列表
     url: `${prefix}/app/order/queryUserOrderList`,
     method: `get`
+  },
+  GetUserTransInfo: { // 获取用户交易数据
+    url: `${prefix}/app/turnover/list`,
+    method: `get`
+  },
+  GetUserAccountRecords: { // 获取用户交易流水
+    url: `${prefix}/app/records/list`,
+    method: `get`
   }
 }
 export default UserApi

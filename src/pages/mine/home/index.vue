@@ -10,7 +10,7 @@
               <div class="UserIcon">
                 <img :src="UserInfo.headUrl" class="centerLabel cover">
               </div>
-              <router-link :to="{ name: 'login' }" v-if="!(UserInfo.id - 0)">登录/注册</router-link>
+              <router-link :to="{ name: 'login' }" v-if="!UserInfo.id">登录/注册</router-link>
               <div class="flex-item" v-else>
                 <span>{{UserInfo.nickname}}</span>
                 <span>{{UserInfo.phone}}</span>
@@ -97,6 +97,10 @@
                     <span class="flex-item">我的收货地址</span>
                     <i class="iconfont iconjiantouright"></i>
                   </router-link>
+                  <a class="flex-h" @click="Exit">
+                    <span class="flex-item">退出登录</span>
+                    <i class="iconfont iconjiantouright"></i>
+                  </a>
                 </div>
               </div>
             </PageRefresh>
@@ -111,6 +115,7 @@
 
 <script>
 import { createNamespacedHelpers } from 'vuex'
+import { Dialog } from 'vant'
 const { mapState: mapUserState, mapActions: mapUserActions } = createNamespacedHelpers('user')
 const MainPage = () => import('@/components/common/MainPage')
 const PageRefresh = () => import('@/components/common/PageRefresh')
@@ -133,17 +138,34 @@ export default {
   },
   methods: {
     ...mapUserActions([
-      'GetUserInfo'
+      'GetUserInfo',
+      'GetUserTransInfo'
     ]),
     UserInfoChange () {
       if (!(this.UserInfo.id - 0)) {
         this.Init()
       }
     },
+    Exit () { // 退出登录
+      Dialog.confirm({
+        title: '提示',
+        message: '确认退出登录？',
+      }).then(() => {
+        window.localStorage.removeItem('zhixiaotoken')
+        this.$router.push({ name: 'login' })
+      })
+    },
     Init (done = () => { }) {
       if (window.localStorage.zhixiaotoken !== undefined) {
         this.GetUserInfo().then(() => {
-          done()
+          if (this.UserInfo.id) {
+            this.GetUserTransInfo().then((res) => {
+              console.log(res.data.data)
+              done()
+            }).catch(() => {
+              done()
+            })
+          }
         }).catch(() => {
           done()
         })
