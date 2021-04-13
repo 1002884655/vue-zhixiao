@@ -84,6 +84,10 @@ export default {
     })
   },
   created () {
+    this.Form.recommendCode = this.$route.query.code || null
+    if (this.Form.recommendCode) {
+      this.IsReg = true
+    }
     this.Init()
   },
   methods: {

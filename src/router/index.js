@@ -121,6 +121,15 @@ let router = new VueRouter({
               },
               component: resolve => (require(['@/pages/mine/myTransactionList'], resolve)),
               children: []
+            },
+            {
+              path: '/mine/setting', // 设置
+              name: 'setting',
+              meta: {
+                title: '设置'
+              },
+              component: resolve => (require(['@/pages/mine/setting'], resolve)),
+              children: []
             }
           ]
         },

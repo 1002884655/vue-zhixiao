@@ -5,7 +5,7 @@
         <div class="Tips">扫描二维码或者填写推荐码即可完成推荐</div>
         <div class="centerLabel">
           <div class="QrCode" v-if="UserInfo.recommendCode">
-            <vue-qrcode :value="UserInfo.recommendCode" :width="200" />
+            <vue-qrcode :value="`${Url}/#/login?code=${UserInfo.recommendCode}`" :width="200" />
           </div>
           <div class="Text">
             <span>您的推荐码是：</span>
@@ -30,6 +30,7 @@ export default {
   },
   data: () => {
     return {
+      Url: window.location.origin
     }
   },
   computed: {

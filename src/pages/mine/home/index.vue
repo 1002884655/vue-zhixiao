@@ -26,11 +26,11 @@
                 <!-- 业绩信息 -->
                 <div class="PerformanceInfo flex-h">
                   <div class="flex-item">
-                    <span>22</span>
+                    <span>{{TotalRenWu}}</span>
                     <span>已达成任务-单</span>
                   </div>
                   <div class="flex-item">
-                    <span>22</span>
+                    <span>{{TotalYeJi}}</span>
                     <span>已达成业绩-单</span>
                   </div>
                 </div>
@@ -52,24 +52,24 @@
                   <div class="flex-h">
                     <div class="flex-item">
                       <span>昨日完成任务：</span>
-                      <span>200</span>
+                      <span>{{YestodayRenWu}}</span>
                       <span>单</span>
                     </div>
                     <div class="flex-item">
                       <span>昨日完成业绩：</span>
-                      <span>200</span>
+                      <span>{{YestodayYeJi}}</span>
                       <span>单</span>
                     </div>
                   </div>
                   <div class="flex-h">
                     <div class="flex-item">
                       <span>今日完成任务：</span>
-                      <span>200</span>
+                      <span>{{TodayRenWu}}</span>
                       <span>单</span>
                     </div>
                     <div class="flex-item">
                       <span>今日完成业绩：</span>
-                      <span>200</span>
+                      <span>{{TodayYeJi}}</span>
                       <span>单</span>
                     </div>
                   </div>
@@ -97,10 +97,10 @@
                     <span class="flex-item">我的收货地址</span>
                     <i class="iconfont iconjiantouright"></i>
                   </router-link>
-                  <a class="flex-h" @click="Exit">
-                    <span class="flex-item">退出登录</span>
+                  <router-link class="flex-h" :to="{ name: 'setting' }">
+                    <span class="flex-item">设置</span>
                     <i class="iconfont iconjiantouright"></i>
-                  </a>
+                  </router-link>
                 </div>
               </div>
             </PageRefresh>
@@ -115,7 +115,6 @@
 
 <script>
 import { createNamespacedHelpers } from 'vuex'
-import { Dialog } from 'vant'
 const { mapState: mapUserState, mapActions: mapUserActions } = createNamespacedHelpers('user')
 const MainPage = () => import('@/components/common/MainPage')
 const PageRefresh = () => import('@/components/common/PageRefresh')
@@ -127,6 +126,12 @@ export default {
   },
   data: () => {
     return {
+      TotalRenWu: 0,
+      TotalYeJi: 0,
+      TodayRenWu: 0,
+      TodayYeJi: 0,
+      YestodayRenWu: 0,
+      YestodayYeJi: 0
     }
   },
   computed: {
@@ -146,21 +151,35 @@ export default {
         this.Init()
       }
     },
-    Exit () { // 退出登录
-      Dialog.confirm({
-        title: '提示',
-        message: '确认退出登录？',
-      }).then(() => {
-        window.localStorage.removeItem('zhixiaotoken')
-        this.$router.push({ name: 'login' })
-      })
-    },
     Init (done = () => { }) {
       if (window.localStorage.zhixiaotoken !== undefined) {
+        this.TotalRenWu = 0
+        this.TotalYeJi = 0
+        this.TodayRenWu = 0
+        this.TodayYeJi = 0
+        this.YestodayRenWu = 0
+        this.YestodayYeJi = 0
         this.GetUserInfo().then(() => {
           if (this.UserInfo.id) {
             this.GetUserTransInfo().then((res) => {
-              console.log(res.data.data)
+              let Arr = res.data.data || []
+              Arr.map((item) => {
+                if (item.type === 'task') { // 任务
+                  this.TotalRenWu++
+                  if (this.ToolClass.DateFormatYear(item.createdTime, 'YY:MM:DD') === this.ToolClass.DateFormatYear(Date.now(), 'YY:MM:DD')) {
+                    this.TodayRenWu++
+                  } else if (new Date(item.createdTime).getTime() >= new Date(new Date().toLocaleDateString()).getTime() - 1000 * 60 * 60 * 24) {
+                    this.YestodayRenWu++
+                  }
+                } else { // 业绩
+                  this.TotalYeJi++
+                  if (this.ToolClass.DateFormatYear(item.createdTime, 'YY:MM:DD') === this.ToolClass.DateFormatYear(Date.now(), 'YY:MM:DD')) {
+                    this.TodayYeJi++
+                  } else if (new Date(item.createdTime).getTime() >= new Date(new Date().toLocaleDateString()).getTime() - 1000 * 60 * 60 * 24) {
+                    this.YestodayYeJi++
+                  }
+                }
+              })
               done()
             }).catch(() => {
               done()
