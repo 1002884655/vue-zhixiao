@@ -3,11 +3,11 @@
     <MainPage>
       <div class="PageContainer">
         <ul>
-          <li class="flex-h">
+          <!-- <li class="flex-h">
             <span class="flex-item">我的银行账户</span>
             <span>123456789</span>
             <i class="iconfont iconjiantouright"></i>
-          </li>
+          </li> -->
           <li class="flex-h" @click="Exit">
             <span class="flex-item">退出登录</span>
             <i class="iconfont iconjiantouright"></i>

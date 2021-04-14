@@ -28,6 +28,13 @@
             border-radius: 100%;
             background: #fff;
             margin-right: 0.15rem;
+            > span {
+              font-size: 0.4rem;
+              font-weight: bold;
+              line-height: 0.42rem;
+              height: 0.42rem;
+              vertical-align: middle;
+            }
           }
           > a {
             width: 0.8rem;

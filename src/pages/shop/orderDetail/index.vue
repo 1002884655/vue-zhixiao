@@ -4,7 +4,7 @@
       <div class="PageContainer flex-v">
         <div class="Address flex-h">
           <span>收货地址：</span>
-          <span class="flex-item">请填写收货地址</span>
+          <span class="flex-item">{{OrderInfo.address}}</span>
         </div>
         <div class="flex-item">
           <div>

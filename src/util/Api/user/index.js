@@ -34,6 +34,14 @@ const UserApi = {
   GetUserAccountRecords: { // 获取用户交易流水
     url: `${prefix}/app/records/list`,
     method: `get`
+  },
+  GetMyRecommedUsers: { // 获取我推荐的人
+    url: `${prefix}/app/user/myRecommend`,
+    method: `get`
+  },
+  GetUserIncomeData: { // 获取用户收入数据
+    url: `${prefix}/app/records/mine/income`,
+    method: `get`
   }
 }
 export default UserApi

@@ -8,7 +8,8 @@
           <div class="centerLabel">
             <div class="flex-h">
               <div class="UserIcon">
-                <img :src="UserInfo.headUrl" class="centerLabel cover">
+                <!-- <img :src="UserInfo.headUrl" class="centerLabel cover"> -->
+                <span class="centerLabel">{{UserInfo.nickname ? UserInfo.nickname[0] : ''}}</span>
               </div>
               <router-link :to="{ name: 'login' }" v-if="!UserInfo.id">登录/注册</router-link>
               <div class="flex-item" v-else>
@@ -40,12 +41,12 @@
                   <div class="flex-h">
                     <div class="flex-item">
                       <span>昨日收入：</span>
-                      <span>200</span>
+                      <span>{{YestodayIncome}}</span>
                       <span>元</span>
                     </div>
                     <div class="flex-item">
                       <span>近30日收入：</span>
-                      <span>200</span>
+                      <span>{{MonthIncome}}</span>
                       <span>元</span>
                     </div>
                   </div>
@@ -131,7 +132,9 @@ export default {
       TodayRenWu: 0,
       TodayYeJi: 0,
       YestodayRenWu: 0,
-      YestodayYeJi: 0
+      YestodayYeJi: 0,
+      YestodayIncome: 0,
+      MonthIncome: 0
     }
   },
   computed: {
@@ -144,7 +147,8 @@ export default {
   methods: {
     ...mapUserActions([
       'GetUserInfo',
-      'GetUserTransInfo'
+      'GetUserTransInfo',
+      'GetUserIncomeData'
     ]),
     UserInfoChange () {
       if (!(this.UserInfo.id - 0)) {
@@ -183,6 +187,10 @@ export default {
               done()
             }).catch(() => {
               done()
+            })
+            this.GetUserIncomeData().then((res) => {
+              this.YestodayIncome = res.data.data.yesterdaySum
+              this.MonthIncome = res.data.data.monthSum
             })
           }
         }).catch(() => {

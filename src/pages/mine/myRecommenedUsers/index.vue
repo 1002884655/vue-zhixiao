@@ -1,23 +1,23 @@
 <template>
   <div class="Page">
-    <MainPage>
+    <MainPage @UserInfoChange="Init">
       <div class="PageContainer flex-v">
         <div class="Top">
           <span>您已成功推荐</span>
-          <span>20</span>
+          <span>{{PageList.length}}</span>
           <span>人</span>
         </div>
         <div class="flex-item">
           <div>
             <PageRefresh @Refresh="Refresh" @Infinite="Infinite">
               <div class="Content">
-                <div v-for="(item, index) in 15" :key="index" class="UsersList flex-h">
+                <div v-for="(item, index) in PageList" :key="index" class="UsersList flex-h">
                   <div class="Img">
-                    <img :src="null" class="centerLabel cover">
+                    <img :src="item.headUrl" class="centerLabel cover">
                   </div>
                   <div class="flex-item">
-                    <span>用户昵称</span>
-                    <span>推荐时间：2020-08-08 08:08:08</span>
+                    <span>{{item.nickname}}</span>
+                    <span>推荐时间：{{ToolClass.DateFormatYear(item.createTime)}}</span>
                   </div>
                 </div>
               </div>
@@ -42,6 +42,13 @@ export default {
   },
   data: () => {
     return {
+      DataLock: false,
+      PageList: [],
+      PageData: {
+        pageSize: 10000,
+        pageNum: 1
+      },
+      HasNextPage: true
     }
   },
   computed: {
@@ -53,12 +60,32 @@ export default {
   },
   methods: {
     ...mapUserActions([
-      ''
+      'GetMyRecommedUsers'
     ]),
+    Init (done = () => { }) {
+      this.PageData.pageNum = 1
+      this.PageList = []
+      this.ToGetPageList(done)
+    },
+    ToGetPageList (done = () => { }) {
+      if (!this.DataLock) {
+        this.DataLock = true
+        this.GetMyRecommedUsers({ params: { ...this.PageData } }).then((res) => {
+          let Arr = res.data.data || []
+          Arr.map((item) => {
+            this.PageList.push(item)
+          })
+          this.DataLock = false
+          done()
+        }).catch((res) => {
+          this.$toast(res.data.message)
+          this.DataLock = false
+          done()
+        })
+      }
+    },
     Refresh (done) {
-      window.setTimeout(() => {
-        done(true)
-      }, 1000)
+      this.Init(done)
     },
     Infinite (done) {
       window.setTimeout(() => {
