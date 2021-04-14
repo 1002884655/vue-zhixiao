@@ -16,7 +16,7 @@
                     <img :src="item.headUrl" class="centerLabel cover">
                   </div>
                   <div class="flex-item">
-                    <span>{{item.nickname}}</span>
+                    <span>{{item.nickname}} <em>{{item.mobile}}</em></span>
                     <span>推荐时间：{{ToolClass.DateFormatYear(item.createTime)}}</span>
                   </div>
                 </div>
