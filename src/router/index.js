@@ -53,6 +53,15 @@ let router = new VueRouter({
               children: []
             },
             {
+              path: '/shop/orderStatus', // 订单支付状态
+              name: 'orderStatus',
+              meta: {
+                title: '支付状态'
+              },
+              component: resolve => (require(['@/pages/shop/orderStatus/index'], resolve)),
+              children: []
+            },
+            {
               path: '/shop/orderDetail', // 订单详情
               name: 'orderDetail',
               meta: {

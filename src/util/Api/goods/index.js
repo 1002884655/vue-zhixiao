@@ -11,6 +11,10 @@ const GoodsApi = {
     url: `${prefix}/app/order/createOrder`,
     method: `post`
   },
+  CreatePay: { // 创建支付
+    url: `${prefix}/app/order/unifiedOrder`,
+    method: `post`
+  },
   GetOrderDetail: { // 获取订单详情
     url: `${prefix}/app/order/detail`,
     method: `get`

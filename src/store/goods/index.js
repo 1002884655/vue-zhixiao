@@ -16,6 +16,11 @@ export default {
     }
   },
   actions: {
+    CreatePay (context, payload) { // 创建支付
+      return new Promise((success, error) => {
+        ToolClass.Axios({ success, error, api: Api.Goods.CreatePay, context, code: 1000, opt: payload })
+      })
+    },
     GetGoodsList (context, payload) { // 获取商品列表
       return new Promise((success, error) => {
         ToolClass.Axios({ success, error, api: Api.Goods.GetGoodsList, context, code: 1000, opt: payload, commit: 'UpdateGoodsList' })

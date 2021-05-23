@@ -111,7 +111,7 @@ export default {
       'UpdateUserInfo'
     ]),
     UserInfoChange () {
-      if (this.UserInfo.id - 0) {
+      if (this.UserInfo.id) {
         this.Init()
       }
     },

@@ -15,7 +15,7 @@
               <ul class="GoodsList">
                 <li class="flex-h">
                   <div class="Img">
-                    <img :src="CurrentGoodsInfo.pictureList ? `http://192.168.31.72:8080${CurrentGoodsInfo.pictureList[0].url}` : null" class="centerLabel cover">
+                    <img :src="CurrentGoodsInfo.pictureList && CurrentGoodsInfo.pictureList.length ? `http://192.168.31.72:8080${CurrentGoodsInfo.pictureList[0].url}` : null" class="centerLabel cover">
                   </div>
                   <div class="flex-item">
                     <span>{{CurrentGoodsInfo.productName}}</span>
@@ -81,7 +81,8 @@ export default {
     ]),
     ...mapGoodsActions([
       'GetGoodsList',
-      'CreateOrder'
+      'CreateOrder',
+      'CreatePay'
     ]),
     Init () {
       if (this.GoodsList.length) {
@@ -107,7 +108,10 @@ export default {
         this.DataLock = true
         this.CreateOrder({ data: { productId: this.CurrentGoodsInfo.id, num: this.GoodsCounts } }).then((res) => {
           this.DataLock = false
-          this.$router.push({ name: 'orderDetail', query: { id: res.data.data.id } })
+          // this.$router.push({ name: 'orderDetail', query: { id: res.data.data.id } })
+          this.CreatePay({ data: { orderId: res.data.data.id } }).then((res) => {
+            window.location.href = res.data.data
+          })
         }).catch((res) => {
           this.$toast(res.data.message)
           this.DataLock = false

@@ -83,6 +83,10 @@ export default {
       UserInfo: x => x.UserInfo
     })
   },
+  mounted () {
+    this.$nextTick(() => {
+    })
+  },
   created () {
     this.Form.recommendCode = this.$route.query.code || null
     if (this.Form.recommendCode) {
