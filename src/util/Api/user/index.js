@@ -1,7 +1,7 @@
 
 // 用户相关
 
-const prefix = process.env.NODE_ENV === 'production' ? '/api' : '/api'
+const prefix = process.env.NODE_ENV === 'production' ? '' : '/api'
 const UserApi = {
   Login: { // 登录
     url: `${prefix}/app/user/login`,

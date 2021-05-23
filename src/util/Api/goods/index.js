@@ -1,7 +1,7 @@
 
 // 商品相关
 
-const prefix = process.env.NODE_ENV === 'production' ? '/api' : '/api'
+const prefix = process.env.NODE_ENV === 'production' ? '' : '/api'
 const GoodsApi = {
   GetGoodsList: { // 获取商品列表
     url: `${prefix}/app/product/getProductList`,

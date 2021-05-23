@@ -45,7 +45,7 @@ module.exports = {
     port: 8080,
     https: false,
     hotOnly: false,
-    proxy: 'http://api.nmnsq.com',
+    proxy: 'https://api.nmnsq.com',
     before: app => { }
   },
   // 第三方插件配置y
