@@ -110,6 +110,7 @@ export default {
           this.DataLock = false
           // this.$router.push({ name: 'orderDetail', query: { id: res.data.data.id } })
           this.CreatePay({ data: { orderId: res.data.data.id } }).then((res) => {
+            window.localStorage.submitorderid = res.data.data.id
             window.location.href = res.data.data
           })
         }).catch((res) => {

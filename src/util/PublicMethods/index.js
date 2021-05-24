@@ -1,7 +1,7 @@
 /* eslint-disable */
 import Axios from 'axios'
 Axios.defaults.withCredentials = false
-Axios.defaults.baseURL = 'https://api.nmnsq.com/api'
+// Axios.defaults.baseURL = 'https://api.nmnsq.com/api'
 const ToolClass = {
   Axios ({ success = () => { }, error = () => { }, api = { method: 'post', url: null }, context = null, opt = null, urlParams = null, code = 0, commit = null, hasOpt = false }) {
     Axios({

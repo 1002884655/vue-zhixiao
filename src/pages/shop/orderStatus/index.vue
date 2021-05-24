@@ -12,14 +12,14 @@
           <i class="iconfont iconshibai"></i>
           <span>支付失败</span>
           <div>
-            <a>重新支付</a>
+            <router-link :to="{name: 'shop'}">返回首页</router-link>
           </div>
         </div>
         <div class="Status" v-else>
           <i class="iconfont iconchenggong success"></i>
           <span>支付成功</span>
           <div>
-            <router-link :to="{name: 'orderDetail', query: {id: $route.query.id}}">完成</router-link>
+            <router-link :to="{name: 'orderDetail', query: {id: OrderId}}">完成</router-link>
           </div>
         </div>
       </div>
@@ -39,7 +39,8 @@ export default {
   },
   data: () => {
     return {
-      OrderStatus: this.$route.query.status || null
+      OrderStatus: null,
+      OrderId: null
     }
   },
   computed: {
@@ -54,9 +55,14 @@ export default {
       ''
     ]),
     ...mapGoodsActions([
-      ''
+      'GetOrderDetail'
     ]),
     Init () {
+      this.GetOrderDetail({ urlParams: window.localStorage.submitorderid }).then((res) => {
+        this.OrderId = window.localStorage.submitorderid
+        this.OrderStatus = res.data.data.status - 0 === 1
+        window.localStorage.submitorderid = null
+      })
     }
   }
 }

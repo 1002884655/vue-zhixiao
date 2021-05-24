@@ -1,11 +1,15 @@
 
 // 用户相关
 
-const prefix = process.env.NODE_ENV === 'production' ? '' : '/api'
+const prefix = process.env.NODE_ENV === 'production' ? 'https://api.nmnsq.com/api' : '/api'
 const UserApi = {
   Login: { // 登录
     url: `${prefix}/app/user/login`,
     method: `post`
+  },
+  GetOpenId: { // 获取openid
+    url: `${prefix}/app/user/getOpenid`,
+    method: `get`
   },
   GetMsgCode: { // 获取短信验证码
     url: `${prefix}/app/user/getSMSCode`,

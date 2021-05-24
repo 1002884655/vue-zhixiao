@@ -18,6 +18,12 @@ export default {
         ToolClass.Axios({ success, error, api: Api.User.Login, context, code: 1000, opt: payload })
       })
     },
+    GetOpenId (context, payload) { // 获取openid
+      console.log(111)
+      return new Promise((success, error) => {
+        ToolClass.Axios({ success, error, api: Api.User.GetOpenId, context, code: 1000, opt: payload })
+      })
+    },
     GetMsgCode (context, payload) { // 获取短信验证码
       return new Promise((success, error) => {
         ToolClass.Axios({ success, error, api: Api.User.GetMsgCode, context, code: 1000, opt: payload })
