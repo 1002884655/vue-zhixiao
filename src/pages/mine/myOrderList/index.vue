@@ -16,14 +16,14 @@
                 <div class="flex-item flex-h">
                   <span class="flex-item">{{item.productName}}</span>
                   <div>
-                    <span>￥{{item.productPrice}}</span>
+                    <span>￥{{(item.productPrice / 100).toFixed(2)}}</span>
                     <span>x{{item.num}}</span>
                   </div>
                 </div>
               </div>
             </router-link>
             <div class="Status">
-              <span>实付款：<em>￥{{Math.abs(item.amount)}}</em></span>
+              <span>实付款：<em>￥{{Math.abs(item.amount / 100).toFixed(2)}}</em></span>
               <a class="Btn" v-if="item.status - 0 === 2">确认收货</a>
               <span class="Text" v-if="item.status - 0 === -1">支付失败</span>
               <span class="Text" v-if="item.status - 0 === 0">待支付</span>

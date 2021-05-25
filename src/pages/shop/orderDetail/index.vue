@@ -14,7 +14,7 @@
               <ul class="GoodsList">
                 <li class="flex-h">
                   <div class="Img">
-                    <img :src="OrderInfo.productInfo ? `http://192.168.31.72:8080${OrderInfo.productInfo.pictureList[0].url}` : null" class="centerLabel cover">
+                    <img :src="OrderInfo.productInfo && OrderInfo.productInfo.pictureList.length ? ImgUrl(OrderInfo.productInfo.pictureList[0].url) : null" class="centerLabel cover">
                   </div>
                   <div class="flex-item">
                     <span>{{OrderInfo.productInfo ? OrderInfo.productInfo.productName : null}}</span>
@@ -90,12 +90,16 @@ export default {
       ''
     ]),
     ...mapGoodsActions([
-      'GetOrderDetail'
+      'GetOrderDetail',
+      'CreatePay'
     ]),
     Init () {
       this.GetOrderDetail({ urlParams: this.$route.query.id }).then((res) => {
         this.OrderInfo = res.data.data
       })
+    },
+    ImgUrl(url) {
+      return `${window.location.origin}${url}`
     }
   }
 }

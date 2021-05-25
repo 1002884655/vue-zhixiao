@@ -75,7 +75,7 @@ export default {
       if (!(this.UserInfo.id - 0)) {
         if (window.localStorage.zhixiaotoken !== undefined) {
           if (this.IsWxClient()) { // 微信环境
-            if (!window.localStorage.zhixiaocode) {
+            if (!window.localStorage.zhixiaocode && window.location.href.indexOf('login') <= -1) {
               if (!this.GetQueryVariable('code')) {
                 window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxce89ea505252c7c0&redirect_uri=${encodeURIComponent(`${window.location.href}`)}&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect`
               } else {

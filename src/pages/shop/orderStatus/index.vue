@@ -4,9 +4,9 @@
       <div class="PageContainer">
         <div class="Loading" v-if="OrderStatus === null">
           <span>发起支付中...</span>
-          <div>
+          <!-- <div>
             <a>已支付</a>
-          </div>
+          </div> -->
         </div>
         <div class="Status" v-if="OrderStatus === false">
           <i class="iconfont iconshibai"></i>
@@ -15,7 +15,7 @@
             <router-link :to="{name: 'shop'}">返回首页</router-link>
           </div>
         </div>
-        <div class="Status" v-else>
+        <div class="Status" v-if="OrderStatus === true">
           <i class="iconfont iconchenggong success"></i>
           <span>支付成功</span>
           <div>
@@ -40,7 +40,8 @@ export default {
   data: () => {
     return {
       OrderStatus: null,
-      OrderId: null
+      OrderId: null,
+      Timer: null
     }
   },
   computed: {
@@ -55,14 +56,35 @@ export default {
       ''
     ]),
     ...mapGoodsActions([
-      'GetOrderDetail'
+      'GetOrderDetail',
+      'CreatePay'
     ]),
     Init () {
-      this.GetOrderDetail({ urlParams: window.localStorage.submitorderid }).then((res) => {
-        this.OrderId = window.localStorage.submitorderid
-        this.OrderStatus = res.data.data.status - 0 === 1
-        window.localStorage.submitorderid = null
-      })
+      if (this.$route.query.id !== window.localStorage.submitorderid) {
+        this.CreatePay({ data: { orderId: this.$route.query.id } }).then((res) => {
+          window.localStorage.submitorderid = this.$route.query.id
+          window.location.href = res.data.data
+        })
+      } else {
+        this.CheckStatus()
+      }
+    },
+    CheckStatus () {
+      window.clearTimeout(this.Timer)
+      this.Timer = window.setTimeout(() => {
+        this.GetOrderDetail({ urlParams: this.$route.query.id }).then((res) => {
+          if (res.data.data.status - 0 === 1) {
+            window.clearTimeout(this.Timer)
+            this.OrderId = this.$route.query.id
+            this.OrderStatus = res.data.data.status - 0 === 1
+            window.localStorage.submitorderid = null
+          } else {
+            this.CheckStatus()
+          }
+        }).catch(() => {
+          this.CheckStatus()
+        })
+      }, 1000)
     }
   }
 }

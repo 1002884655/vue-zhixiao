@@ -39,7 +39,7 @@
         </div>
         <div class="Bottom flex-h">
           <div class="flex-item">
-            <span>￥{{CurrentGoodsInfo.price}}</span>
+            <span>￥{{(CurrentGoodsInfo.price / 100).toFixed(2)}}</span>
           </div>
           <a class="Btn active" @click="ToBuy">立即购买</a>
         </div>

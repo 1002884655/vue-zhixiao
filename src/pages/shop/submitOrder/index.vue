@@ -21,7 +21,7 @@
                     <span>{{CurrentGoodsInfo.productName}}</span>
                   </div>
                   <div class="More">
-                    <span>￥{{CurrentGoodsInfo.price}}</span>
+                    <span>￥{{(CurrentGoodsInfo.price / 100).toFixed(2)}}</span>
                     <div class="flex-h">
                       <a @click="GoodsCounts = GoodsCounts > 1 ? GoodsCounts - 1 : 1"></a>
                       <span class="flex-item">{{GoodsCounts}}</span>
@@ -34,7 +34,7 @@
               <!-- 总价 -->
               <div class="TotalPrice">
                 <span>应付款：</span>
-                <span>￥{{CurrentGoodsInfo.price ? GoodsCounts * CurrentGoodsInfo.price : 0}}</span>
+                <span>￥{{CurrentGoodsInfo.price ? (GoodsCounts * CurrentGoodsInfo.price / 100).toFixed(2) : 0}}</span>
               </div>
 
             </div>
@@ -108,11 +108,11 @@ export default {
         this.DataLock = true
         this.CreateOrder({ data: { productId: this.CurrentGoodsInfo.id, num: this.GoodsCounts } }).then((res) => {
           this.DataLock = false
-          // this.$router.push({ name: 'orderDetail', query: { id: res.data.data.id } })
-          this.CreatePay({ data: { orderId: res.data.data.id } }).then((res) => {
-            window.localStorage.submitorderid = res.data.data.id
-            window.location.href = res.data.data
-          })
+          this.$router.push({ name: 'orderStatus', query: { id: res.data.data.id } })
+          // this.CreatePay({ data: { orderId: res.data.data.id } }).then((res) => {
+          //   window.localStorage.submitorderid = res.data.data.id
+          //   window.location.href = res.data.data
+          // })
         }).catch((res) => {
           this.$toast(res.data.message)
           this.DataLock = false
