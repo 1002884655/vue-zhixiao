@@ -1,6 +1,6 @@
 <template>
   <div class="Page">
-    <MainPage @UserInfoChange="Init">
+    <MainPage>
       <div class="PageContainer">
         <div class="Loading" v-if="OrderStatus === null">
           <span>发起支付中...</span>
@@ -51,6 +51,11 @@ export default {
   },
   created () {
   },
+  mounted() {
+    this.$nextTick(() => {
+      this.Init()
+    })
+  },
   methods: {
     ...mapUserActions([
       ''
@@ -63,7 +68,9 @@ export default {
       if (this.$route.query.id !== window.localStorage.submitorderid) {
         this.CreatePay({ data: { orderId: this.$route.query.id } }).then((res) => {
           window.localStorage.submitorderid = this.$route.query.id
-          window.location.href = res.data.data
+          // window.location.href = res.data.data
+          this.CheckStatus()
+          window.open(res.data.data, '_blank')
         })
       } else {
         this.CheckStatus()

@@ -97,14 +97,14 @@ export default {
     Init () {
       if (this.GoodsList.length) {
         this.GoodsList.map((item) => {
-          if (item.id - 0 === this.$route.query.id - 0) {
+          if (item.id === this.$route.query.id) {
             this.CurrentGoodsInfo = { ...item }
           }
         })
       } else {
         this.GetGoodsList().then(() => {
           this.GoodsList.map((item) => {
-            if (item.id - 0 === this.$route.query.id - 0) {
+            if (item.id === this.$route.query.id) {
               this.CurrentGoodsInfo = { ...item }
             }
           })
