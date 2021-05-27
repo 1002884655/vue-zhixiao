@@ -5,11 +5,12 @@
   > .MainTop {
     position: relative;
     z-index: 2;
-    background: #e00f3a;
+    background: #fff;
+    box-shadow: 0 0 0.03rem 0.03rem rgba(0, 0, 0, 0.03);
     >.MainTopBack {
       display: inline-block;
       font-size: 0.24rem;
-      color: #fff;
+      color: #333;
       position: absolute;
       left: 0.15rem;
       z-index: 2;
@@ -21,7 +22,7 @@
       position: relative;
       text-align: center;
       line-height: 0.44rem;
-      color: #fff;
+      color: #333;
       z-index: 1;
       font-size: 0.16rem;
     }

@@ -6,9 +6,11 @@ import ToolClass from './util/PublicMethods'
 import './assets/css/reset.scss'
 import './assets/css/iconfont.css'
 import VueScroller from 'vue-scroller'
+import VueClipboard from 'vue-clipboard2'
 import { Toast } from 'vant'
 
 Vue.use(VueScroller, Toast)
+Vue.use(VueClipboard)
 Vue.prototype.ToolClass = ToolClass
 Vue.config.productionTip = false
 

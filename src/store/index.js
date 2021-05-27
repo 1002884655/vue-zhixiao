@@ -6,7 +6,7 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    MainTabActiveColor: '#e00f3a', // 页底tab选中色值
+    MainTabActiveColor: '#db261d', // 页底tab选中色值
     MainTabDefaultColor: '#999', // 页底tab默认色值
     MainTabArr: [ // 页底tab数据
       { name: '商城', id: 1, icon: 'iconshangcheng', routerName: 'shopHome' },

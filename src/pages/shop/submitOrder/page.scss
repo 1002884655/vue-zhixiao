@@ -84,7 +84,7 @@
                   display: block;
                   &:first-child {
                     font-weight: bold;
-                    color: #e00f3a;
+                    color: #db261d;
                   }
                 }
                 > div {
@@ -143,7 +143,7 @@
               color: #333;
               line-height: 0.4rem;
               &:last-child {
-                color: #e00f3a;
+                color: #db261d;
               }
             }
           }
@@ -158,7 +158,7 @@
         background: #ccc;
         color: #fff;
         &.active {
-          background: #e00f3a;
+          background: #db261d;
         }
       }
     }

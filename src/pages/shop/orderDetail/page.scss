@@ -81,7 +81,7 @@
                   display: block;
                   &:first-child {
                     font-weight: bold;
-                    color: #e00f3a;
+                    color: #db261d;
                   }
                 }
               }
@@ -106,7 +106,7 @@
               color: #333;
               line-height: 0.4rem;
               &:last-child {
-                color: #e00f3a;
+                color: #db261d;
               }
             }
           }
@@ -143,7 +143,7 @@
         color: #fff;
         user-select: none;
         &.active {
-          background: #e00f3a;
+          background: #db261d;
         }
       }
     }

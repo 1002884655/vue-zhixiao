@@ -8,9 +8,14 @@
     height: 100%;
     > div {
       width: 2.4rem;
+      > img {
+        display: block;
+        margin: 0 auto;
+      }
       > .Form {
         position: relative;
         overflow: hidden;
+        margin-top: 0.4rem;
         > .flex-h {
           align-items: center;
           margin-top: 0.1rem;
@@ -42,7 +47,7 @@
           }
           > a {
             color: #fff;
-            background: #e00f3a;
+            background: #db261d;
             padding: 0 0.05rem;
             line-height: 0.24rem;
             border-radius: 0.03rem;
@@ -65,7 +70,7 @@
           color: #fff;
           user-select: none;
           &.active {
-            background: #e00f3a;
+            background: #db261d;
           }
         }
         > span {
@@ -78,7 +83,7 @@
           > a {
             font-size: 0.14rem;
             line-height: 0.2rem;
-            color: #e00f3a;
+            color: #db261d;
           }
         }
       }

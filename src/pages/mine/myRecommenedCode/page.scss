@@ -34,13 +34,23 @@
           text-align: center;
           font-size: 0.13rem;
           line-height: 0.3rem;
-          color: #e00f3a;
+          color: #db261d;
           font-weight: bold;
           &:first-child {
             font-size: 0.16rem;
             color: #333;
             font-weight: normal;
           }
+        }
+        > button {
+          display: block;
+          text-align: center;
+          font-size: 0.13rem;
+          line-height: 0.3rem;
+          color: #db261d;
+          font-weight: bold;
+          background: none;
+          border: none;
         }
       }
     }

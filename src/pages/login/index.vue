@@ -4,6 +4,8 @@
       <div class="Content">
         <div class="centerLabel">
 
+          <img src="../../assets/img/logo.jpg" height="100px" alt="">
+
           <!-- 登录 -->
           <div class="Form" v-if="!IsReg">
             <div class="flex-h Line">
@@ -15,7 +17,7 @@
             <div class="flex-h Line">
               <i class="iconfont iconyanzhengma"></i>
               <div class="flex-item">
-                <input type="password" placeholder="请输入验证码" v-model="Form.smsCode">
+                <input type="number" placeholder="请输入验证码" v-model="Form.smsCode">
               </div>
               <a @click="ToGetMsgCode" v-if="CodeCounts === 60">获取验证码</a>
               <span v-else>{{CodeCounts > 9 ? CodeCounts : `0${CodeCounts}`}}s</span>
@@ -35,7 +37,7 @@
             <div class="flex-h Line">
               <i class="iconfont iconyanzhengma"></i>
               <div class="flex-item">
-                <input type="text" placeholder="请输入验证码" v-model="Form.smsCode">
+                <input type="number" placeholder="请输入验证码" v-model="Form.smsCode">
               </div>
               <a @click="ToGetMsgCode" v-if="CodeCounts === 60">获取验证码</a>
               <span v-else>{{CodeCounts > 9 ? CodeCounts : `0${CodeCounts}`}}s</span>
@@ -158,8 +160,11 @@ export default {
       }
       if (!this.DataLock) {
         this.DataLock = true
-        this.Login({ data: { ...this.Form } }).then(() => {
+        this.Login({ data: { ...this.Form } }).then((res) => {
           this.DataLock = false
+          window.localStorage.zhixiaotoken = res.data.data.token
+          this.DataLock = false
+          this.$router.push({ name: 'shopHome' })
         }).catch((res) => {
           this.$toast(res.data.message)
           this.DataLock = false

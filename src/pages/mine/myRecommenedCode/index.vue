@@ -8,8 +8,8 @@
             <vue-qrcode :value="`${Url}/#/login?code=${UserInfo.recommendCode}`" :width="200" />
           </div>
           <div class="Text">
-            <span>您的推荐码是：</span>
-            <span>{{UserInfo.recommendCode}}</span>
+            <span>您的推荐码是：（点击复制）</span>
+            <button @click="CopyCode">{{UserInfo.recommendCode}}</button>
           </div>
         </div>
       </div>
@@ -44,6 +44,10 @@ export default {
     ...mapUserActions([
       ''
     ]),
+    CopyCode() {
+      this.$copyText(this.UserInfo.recommendCode)
+      this.$toast('复制成功')
+    },
     Refresh (done) {
       window.setTimeout(() => {
         done(true)
