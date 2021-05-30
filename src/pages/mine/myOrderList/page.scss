@@ -49,6 +49,10 @@
           overflow: hidden;
           background: #eee;
           margin-right: 0.15rem;
+          >i {
+            font-size: 0.3rem;
+            color: #999;
+          }
         }
         > .flex-item {
           > .flex-item {

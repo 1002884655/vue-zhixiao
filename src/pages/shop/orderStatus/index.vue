@@ -41,7 +41,8 @@ export default {
     return {
       OrderStatus: null,
       OrderId: null,
-      Timer: null
+      Timer: null,
+      PayTimer: null
     }
   },
   computed: {
@@ -67,10 +68,14 @@ export default {
     Init () {
       if (this.$route.query.id !== window.localStorage.submitorderid) {
         this.CreatePay({ data: { orderId: this.$route.query.id } }).then((res) => {
-          window.localStorage.submitorderid = this.$route.query.id
-          // window.location.href = res.data.data
-          this.CheckStatus()
-          window.open(res.data.data, '_blank')
+          window.clearTimeout(this.PayTimer)
+          this.PayTimer = window.setTimeout(() => {
+            window.clearTimeout(this.PayTimer)
+            window.localStorage.submitorderid = this.$route.query.id
+            this.CheckStatus()
+            window.location.href = res.data.data
+            // window.open(res.data.data, '_blank')
+          }, 1000)
         })
       } else {
         this.CheckStatus()

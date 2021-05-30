@@ -17,7 +17,7 @@
                   </div>
                   <div class="flex-item">
                     <span>{{item.nickname}} <em>{{item.mobile}}</em></span>
-                    <span>推荐时间：{{ToolClass.DateFormatYear(item.createTime)}}</span>
+                    <span>推荐时间：{{item.createTime}}</span>
                   </div>
                 </div>
               </div>

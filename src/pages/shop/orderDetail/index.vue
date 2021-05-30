@@ -20,7 +20,7 @@
                     <span>{{OrderInfo.productInfo ? OrderInfo.productInfo.productName : null}}</span>
                   </div>
                   <div class="More">
-                    <span>￥{{OrderInfo.productInfo ? OrderInfo.productInfo.price : 0}}</span>
+                    <span>￥{{OrderInfo.productInfo ? OrderInfo.productInfo.priceVal || OrderInfo.productInfo.price : 0}}</span>
                     <span>x{{OrderInfo.num || 0}}</span>
                   </div>
                 </li>
@@ -99,7 +99,7 @@ export default {
       })
     },
     ImgUrl(url) {
-      return `${window.location.origin}${url}`
+      return `https://api.nmnsq.com${url}`
     }
   }
 }

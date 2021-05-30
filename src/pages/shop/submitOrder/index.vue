@@ -15,13 +15,13 @@
               <ul class="GoodsList">
                 <li class="flex-h">
                   <div class="Img">
-                    <img :src="CurrentGoodsInfo.pictureList && CurrentGoodsInfo.pictureList.length ? `http://192.168.31.72:8080${CurrentGoodsInfo.pictureList[0].url}` : null" class="centerLabel cover">
+                    <img :src="CurrentGoodsInfo.pictureList && CurrentGoodsInfo.pictureList.length ? `https://api.nmnsq.com${CurrentGoodsInfo.pictureList[0].url}` : null" class="centerLabel cover">
                   </div>
                   <div class="flex-item">
                     <span>{{CurrentGoodsInfo.productName}}</span>
                   </div>
                   <div class="More">
-                    <span>￥{{(CurrentGoodsInfo.price / 100).toFixed(2)}}</span>
+                    <span>￥{{CurrentGoodsInfo.priceVal}}</span>
                     <div class="flex-h">
                       <a @click="GoodsCounts = GoodsCounts > 1 ? GoodsCounts - 1 : 1"></a>
                       <span class="flex-item">{{GoodsCounts}}</span>
@@ -34,7 +34,7 @@
               <!-- 总价 -->
               <div class="TotalPrice">
                 <span>应付款：</span>
-                <span>￥{{CurrentGoodsInfo.price ? (GoodsCounts * CurrentGoodsInfo.price / 100).toFixed(2) : 0}}</span>
+                <span>￥{{CurrentGoodsInfo.priceVal ? (GoodsCounts * CurrentGoodsInfo.priceVal).toFixed(2) : 0}}</span>
               </div>
 
             </div>

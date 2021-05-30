@@ -6,11 +6,12 @@
           <div v-for="(item, index) in PageList" :key="index" class="OrderList">
             <div class="Top flex-h">
               <span class="flex-item">{{item.orderId}}</span>
-              <span>{{ToolClass.DateFormatYear(item.createOrderTime)}}</span>
+              <span>{{item.createOrderTime}}</span>
             </div>
             <router-link class="GoodsList flex-h" :to="{ name: 'orderDetail', query: { id: item.orderId } }">
               <div class="Img">
-                <img :src="null" class="centerLabel cover">
+                <img v-if="item.pictureList.length" :src="`https://api.nmnsq.com${item.pictureList[0].url}`" class="centerLabel cover">
+                <i class="iconfont iconxiajia centerLabel" v-else></i>
               </div>
               <div class="flex-item flex-v">
                 <div class="flex-item flex-h">

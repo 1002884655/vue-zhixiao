@@ -13,7 +13,7 @@
                     <swiper :options="SwiperOptions">
                       <swiper-slide class="SwiperItem" v-for="(item, index) in CurrentGoodsInfo.pictureList" :key="index">
                         <div class="BannerItem">
-                          <img :src="`http://192.168.31.72:8080${item.url}`" class="centerLabel cover">
+                          <img :src="`https://api.nmnsq.com${item.url}`" class="centerLabel cover">
                         </div>
                       </swiper-slide>
                     </swiper>
@@ -39,7 +39,7 @@
         </div>
         <div class="Bottom flex-h">
           <div class="flex-item">
-            <span>￥{{(CurrentGoodsInfo.price / 100).toFixed(2)}}</span>
+            <span>￥{{CurrentGoodsInfo.priceVal}}</span>
           </div>
           <a class="Btn active" @click="ToBuy">立即购买</a>
         </div>

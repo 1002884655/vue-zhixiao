@@ -1,7 +1,7 @@
 <template>
   <router-link tag="div" class="components GoodsListItem" :to="{ name: 'goodsDetail', query: { id: data.id } }">
     <div class="Img">
-      <img v-if="data.pictureList.length" :src="`http://192.168.31.72:8080${data.pictureList[0].url}`" class="centerLabel cover" alt="">
+      <img v-if="data.pictureList.length" :src="`https://api.nmnsq.com${data.pictureList[0].url}`" class="centerLabel cover" alt="">
     </div>
     <div class="Title flex-h">
       <div class="flex-item">

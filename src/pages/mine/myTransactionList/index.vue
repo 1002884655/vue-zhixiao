@@ -12,7 +12,7 @@
                   <span class="flex-item">{{item.type === 'expend' ? '支出' : '收入'}}</span>
                   <span :class="{'active': item.type !== 'expend'}">{{item.type === 'expend' ? '-' : ''}}￥{{Math.abs(item.amount)}}</span>
                 </div>
-                <span class="Time">{{ToolClass.DateFormatYear(item.createdTime)}}</span>
+                <span class="Time">{{item.createdTime}}</span>
               </div>
             </div>
           </PageRefresh>
@@ -27,7 +27,7 @@
                   <span class="flex-item">{{item.type === 'expend' ? '支出' : '收入'}}</span>
                   <span :class="{'active': item.type !== 'expend'}">{{item.type === 'expend' ? '-' : ''}}￥{{Math.abs(item.amount)}}</span>
                 </div>
-                <span class="Time">{{ToolClass.DateFormatYear(item.createdTime)}}</span>
+                <span class="Time">{{item.createdTime}}</span>
               </div>
             </div>
           </PageRefresh>
@@ -42,7 +42,7 @@
                   <span class="flex-item">{{item.type === 'expend' ? '支出' : '收入'}}</span>
                   <span :class="{'active': item.type !== 'expend'}">{{item.type === 'expend' ? '-' : ''}}￥{{Math.abs(item.amount)}}</span>
                 </div>
-                <span class="Time">{{ToolClass.DateFormatYear(item.createdTime)}}</span>
+                <span class="Time">{{item.createdTime}}</span>
               </div>
             </div>
           </PageRefresh>
