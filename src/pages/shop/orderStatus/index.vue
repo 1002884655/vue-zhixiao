@@ -2,6 +2,7 @@
   <div class="Page">
     <MainPage>
       <div class="PageContainer">
+        <span>{{WxConfig.timestamp}}</span>
         <div class="Loading" v-if="OrderStatus === null">
           <span>发起支付中...</span>
           <!-- <div>
@@ -28,6 +29,7 @@
 </template>
 
 <script>
+import wx from 'weixin-jsapi'
 import { createNamespacedHelpers } from 'vuex'
 const { mapState: mapUserState, mapActions: mapUserActions } = createNamespacedHelpers('user')
 const { mapActions: mapGoodsActions } = createNamespacedHelpers('goods')
@@ -42,7 +44,8 @@ export default {
       OrderStatus: null,
       OrderId: null,
       Timer: null,
-      PayTimer: null
+      PayTimer: null,
+      WxConfig: {}
     }
   },
   computed: {
@@ -52,7 +55,7 @@ export default {
   },
   created () {
   },
-  mounted() {
+  mounted () {
     this.$nextTick(() => {
       this.Init()
     })
@@ -72,14 +75,63 @@ export default {
           this.PayTimer = window.setTimeout(() => {
             window.clearTimeout(this.PayTimer)
             window.localStorage.submitorderid = this.$route.query.id
+            this.WxConfig = { ...res.data.data }
+            if (WeixinJSBridge) {
+              WeixinJSBridge.invoke('getBrandWCPayRequest', {
+                appId: this.WxConfig.appid,
+                timeStamp: `${this.WxConfig.timestamp}`,
+                nonceStr: this.WxConfig.nonceStr,
+                package: this.WxConfig.prepay_id,
+                signType: 'RSA',
+                paySign: this.WxConfig.signature
+              }, (res) => {
+                if (res.err_msg == 'get_brand_wcpay_request:ok') {
+                  this.CheckStatus()
+                } else {
+                  this.OrderStatus = false
+                }
+              })
+            }
+            // wx.config({
+            //   debug: true,
+            //   appId: this.WxConfig.appid,
+            //   timestamp: this.WxConfig.timestamp,
+            //   nonceStr: this.WxConfig.nonceStr,
+            //   signature: this.WxConfig.signature,
+            //   jsApiList: ['chooseWXPay']
+            // })
+            // wx.chooseWXPay({  //此方法应放在调用后台统一下单接口成功后回调里面，接口返回  timeStamp，nonceStr，package，paySign等参数
+            //   timestamp: this.WxConfig.timeStamp,
+            //   nonceStr: this.WxConfig.nonceStr,
+            //   package: this.WxConfig.prepay_id,
+            //   signType: 'MD5',
+            //   paySign: this.WxConfig.signature,
+            //   appId: this.WxConfig.appid,  //此参数可不用
+            //   success: (res) => {
+            //     // 支付成功后的回调函数  
+            //     if (res.errMsg === 'chooseWXPay:ok') {
+            //       //支付成功  
+            //       this.CheckStatus()
+            //     }
+            //   },
+            //   cancel: () => {
+            //     //支付取消  
+            //     this.OrderStatus = false
+            //   }
+            // })
             this.CheckStatus()
-            window.location.href = res.data.data
-            // window.open(res.data.data, '_blank')
           }, 1000)
         })
       } else {
         this.CheckStatus()
       }
+    },
+    IsWxClient () {
+      let ua = navigator.userAgent.toLowerCase()
+      if (ua.match(/MicroMessenger/i) == "micromessenger") {
+        return true
+      }
+      return false
     },
     CheckStatus () {
       window.clearTimeout(this.Timer)

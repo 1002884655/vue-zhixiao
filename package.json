@@ -22,7 +22,8 @@
     "vue-scroller": "^2.2.4",
     "vue-store": "^0.3.1-moved",
     "vuex": "^3.6.2",
-    "weixin-js-sdk": "^1.6.0"
+    "weixin-js-sdk": "^1.6.0",
+    "weixin-jsapi": "^1.1.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

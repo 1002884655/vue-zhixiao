@@ -113,8 +113,19 @@ export default {
         })
       }
     },
+    IsWxClient () {
+      let ua = navigator.userAgent.toLowerCase()
+      if (ua.match(/MicroMessenger/i) == "micromessenger") {
+        return true
+      }
+      return false
+    },
     ToBuy () {
-      this.$router.push({ name: 'submitOrder', query: { id: this.CurrentGoodsInfo.id } })
+      if (this.IsWxClient()) {
+        this.$router.push({ name: 'submitOrder', query: { id: this.CurrentGoodsInfo.id } })
+      } else {
+        this.$toast('请在微信内打开此页面')
+      }
     },
     Refresh (done) {
       window.setTimeout(() => {
