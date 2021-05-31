@@ -29,7 +29,6 @@
 </template>
 
 <script>
-import wx from 'weixin-jsapi'
 import { createNamespacedHelpers } from 'vuex'
 const { mapState: mapUserState, mapActions: mapUserActions } = createNamespacedHelpers('user')
 const { mapActions: mapGoodsActions } = createNamespacedHelpers('goods')
@@ -75,17 +74,16 @@ export default {
           this.PayTimer = window.setTimeout(() => {
             window.clearTimeout(this.PayTimer)
             window.localStorage.submitorderid = this.$route.query.id
-            this.WxConfig = { ...res.data.data }
-            if (WeixinJSBridge) {
-              WeixinJSBridge.invoke('getBrandWCPayRequest', {
-                appId: this.WxConfig.appid,
-                timeStamp: `${this.WxConfig.timestamp}`,
-                nonceStr: this.WxConfig.nonceStr,
-                package: this.WxConfig.prepay_id,
+            if (window.WeixinJSBridge) {
+              window.WeixinJSBridge.invoke('getBrandWCPayRequest', {
+                appId: res.data.data.appid,
+                timeStamp: `${res.data.data.timestamp}`,
+                nonceStr: res.data.data.nonceStr,
+                package: `prepay_id=${res.data.data.prepay_id}`,
                 signType: 'RSA',
-                paySign: this.WxConfig.signature
-              }, (res) => {
-                if (res.err_msg == 'get_brand_wcpay_request:ok') {
+                paySign: res.data.data.signature
+              }, (pRes) => {
+                if (pRes.err_msg == 'get_brand_wcpay_request:ok') {
                   this.CheckStatus()
                 } else {
                   this.OrderStatus = false
