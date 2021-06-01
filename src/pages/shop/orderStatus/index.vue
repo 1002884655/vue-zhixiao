@@ -80,7 +80,7 @@ export default {
                 timeStamp: `${res.data.data.timestamp}`,
                 nonceStr: res.data.data.nonceStr,
                 package: `prepay_id=${res.data.data.prepay_id}`,
-                signType: 'RSA',
+                signType: 'md5',
                 paySign: res.data.data.signature
               }, (pRes) => {
                 if (pRes.err_msg == 'get_brand_wcpay_request:ok') {
