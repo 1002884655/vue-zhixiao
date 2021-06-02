@@ -30,7 +30,7 @@
                 <div class="Detail">
                   <span class="Text">商品详情</span>
                   <img :src="null" width="100%">
-                  <pre>{{CurrentGoodsInfo.productDesc}}</pre>
+                  <div class="RichText" v-html="CurrentGoodsInfo.productDesc"></div>
                 </div>
 
               </div>

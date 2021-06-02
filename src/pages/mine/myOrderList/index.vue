@@ -25,7 +25,7 @@
             </router-link>
             <div class="Status">
               <span>实付款：<em>￥{{Math.abs(item.amount / 100).toFixed(2)}}</em></span>
-              <a class="Btn" v-if="item.status - 0 === 2">确认收货</a>
+              <a class="Btn" @click="ToConfirmReceipt(item)" v-if="item.status - 0 === 2">确认收货</a>
               <span class="Text" v-if="item.status - 0 === -1">支付失败</span>
               <span class="Text" v-if="item.status - 0 === 0">待支付</span>
               <span class="Text" v-if="item.status - 0 === 1">待发货</span>
@@ -41,6 +41,7 @@
 <script>
 import { createNamespacedHelpers } from 'vuex'
 const { mapState: mapUserState, mapActions: mapUserActions } = createNamespacedHelpers('user')
+const { mapActions: mapGoodsActions } = createNamespacedHelpers('goods')
 const MainPage = () => import('@/components/common/MainPage')
 const PageRefresh = () => import('@/components/common/PageRefresh')
 export default {
@@ -71,10 +72,25 @@ export default {
     ...mapUserActions([
       'GetMyOrderList'
     ]),
+    ...mapGoodsActions([
+      'ConfirmReceipt'
+    ]),
     Init (done = () => { }) {
       this.PageData.pageNum = 1
       this.PageList = []
       this.ToGetPageList(done)
+    },
+    ToConfirmReceipt (item) {
+      if (!this.DataLock) {
+        this.DataLock = true
+        this.ConfirmReceipt({ data: { orderId: item.orderId } }).then(() => {
+          this.$toast('已确认收货')
+          item.status = 3
+          this.DataLock = false
+        }).catch(() => {
+          this.DataLock = false
+        })
+      }
     },
     ToGetPageList (done = () => { }) {
       if (!this.DataLock) {

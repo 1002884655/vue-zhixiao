@@ -18,6 +18,10 @@ const GoodsApi = {
   GetOrderDetail: { // 获取订单详情
     url: `${prefix}/app/order/detail`,
     method: `get`
+  },
+  ConfirmReceipt: { // 确认收货
+    url: `${prefix}/app/order/receiveProduct`,
+    method: `post`
   }
 }
 export default GoodsApi
