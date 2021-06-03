@@ -74,22 +74,6 @@ export default {
     Init () {
       if (!this.UserInfo.id) {
         if (window.localStorage.zhixiaotoken !== undefined) {
-          // if (this.IsWxClient()) { // 微信环境
-          //   if (!window.localStorage.zhixiaocode && window.location.href.indexOf('login') <= -1) {
-          //     if (!this.GetQueryVariable('code')) {
-          //       window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxce89ea505252c7c0&redirect_uri=${encodeURIComponent(`${window.location.href}`)}&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect`
-          //     } else {
-          //       window.localStorage.zhixiaocode = this.GetQueryVariable('code')
-          //       this.GetOpenId({ params: { code: this.GetQueryVariable('code') } })
-          //     }
-          //   }
-          // } else {
-          //   this.GetUserInfo().then(() => {
-          //     this.$emit('UserInfoChange')
-          //   }).catch((res) => {
-          //     this.$toast(res.data.message)
-          //   })
-          // }
           this.GetUserInfo().then(() => {
             if (!this.UserInfo.weixin && this.IsWxClient()) {
               if (!this.GetQueryVariable('code')) {
@@ -107,7 +91,11 @@ export default {
             }
           }).catch((res) => {
             this.$toast(res.data.message)
-            this.$emit('UserInfoChange')
+            if (res.data.code - 0 === 1001) {
+              this.$router.push({ name: 'login' })
+            } else {
+              this.$emit('UserInfoChange')
+            }
           })
         } else {
           this.$router.push({ name: 'login' })

@@ -31,6 +31,12 @@
             <div class="flex-h Line">
               <i class="iconfont iconzhanghao"></i>
               <div class="flex-item">
+                <input type="text" placeholder="请输入真实姓名" v-model="Form.name">
+              </div>
+            </div>
+            <div class="flex-h Line">
+              <i class="iconfont iconshouji"></i>
+              <div class="flex-item">
                 <input type="number" placeholder="请输入手机号" v-model="Form.phone">
               </div>
             </div>
@@ -76,7 +82,8 @@ export default {
       Form: {
         phone: '',
         smsCode: '',
-        recommendCode: null
+        recommendCode: null,
+        name: ''
       }
     }
   },
@@ -146,6 +153,10 @@ export default {
       }
     },
     ToReg () { // 注册
+      if (this.Form.name === '') {
+        this.$toast('请输入真实姓名')
+        return false
+      }
       if (this.Form.phone === '') {
         this.$toast('请输入手机号')
         return false

@@ -5,7 +5,9 @@
         <div class="Content">
           <ul class="GoodsList">
             <li v-for="(item, index) in GoodsList" :key="index">
-              <GoodsListItem :data="item"></GoodsListItem>
+              <div>
+                <GoodsListItem :data="item"></GoodsListItem>
+              </div>
             </li>
           </ul>
         </div>

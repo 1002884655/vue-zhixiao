@@ -8,16 +8,24 @@
     width: 100%;
     position: relative;
     > .GoodsList {
-      padding: 0 0.15rem;
       position: relative;
       overflow: visible;
       > li {
         position: relative;
         overflow: visible;
-        margin-bottom: 0.15rem;
-        display: block;
-        &:first-child {
-          margin-top: 0.15rem;
+        margin-top: 0.15rem;
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+        >div {
+          padding: 0 0.15rem 0 0.07rem;
+          position: relative;
+          overflow: hidden;
+        }
+        &:nth-child(2n-1) {
+          >div {
+            padding: 0 0.07rem 0 0.15rem;
+          }
         }
       }
     }

@@ -13,7 +13,8 @@
               <div class="Content">
                 <div v-for="(item, index) in PageList" :key="index" class="UsersList flex-h">
                   <div class="Img">
-                    <img :src="item.headUrl" class="centerLabel cover">
+                    <img v-if="item.headUrl" :src="item.headUrl" class="centerLabel cover">
+                    <i class="iconfont icontouxiang centerLabel" v-else></i>
                   </div>
                   <div class="flex-item">
                     <span>{{item.nickname}} <em>{{item.mobile}}</em></span>
