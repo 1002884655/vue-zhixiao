@@ -43,6 +43,10 @@ const UserApi = {
     url: `${prefix}/app/user/myRecommend`,
     method: `get`
   },
+  GetMyRecommedSubUsers: { // 获取我推荐的人推荐的人
+    url: `${prefix}/app/user/nextRecommend`,
+    method: `get`
+  },
   GetUserIncomeData: { // 获取用户收入数据
     url: `${prefix}/app/records/mine/income`,
     method: `get`

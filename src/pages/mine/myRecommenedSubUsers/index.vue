@@ -3,7 +3,7 @@
     <MainPage @UserInfoChange="Init">
       <div class="PageContainer flex-v">
         <div class="Top">
-          <span>您已成功推荐</span>
+          <span>TA已成功推荐</span>
           <span>{{PageList.length}}</span>
           <span>人</span>
         </div>
@@ -49,7 +49,7 @@ export default {
         pageSize: 10000,
         pageNum: 1
       },
-      HasNextPage: true
+      HasNextPage: false
     }
   },
   computed: {
@@ -61,7 +61,7 @@ export default {
   },
   methods: {
     ...mapUserActions([
-      'GetMyRecommedUsers'
+      'GetMyRecommedSubUsers'
     ]),
     Init (done = () => { }) {
       this.PageData.pageNum = 1
@@ -71,7 +71,7 @@ export default {
     ToGetPageList (done = () => { }) {
       if (!this.DataLock) {
         this.DataLock = true
-        this.GetMyRecommedUsers({ params: { ...this.PageData } }).then((res) => {
+        this.GetMyRecommedSubUsers({ params: { userId: this.$route.query.id } }).then((res) => {
           let Arr = res.data.data || []
           Arr.map((item) => {
             this.PageList.push(item)

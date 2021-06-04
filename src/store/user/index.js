@@ -68,6 +68,11 @@ export default {
       return new Promise((success, error) => {
         ToolClass.Axios({ success, error, api: Api.User.GetUserIncomeData, context, code: 1000, opt: payload })
       })
+    },
+    GetMyRecommedSubUsers (context, payload) { // 获取我推荐的人推荐的人
+      return new Promise((success, error) => {
+        ToolClass.Axios({ success, error, api: Api.User.GetMyRecommedSubUsers, context, code: 1000, opt: payload })
+      })
     }
   }
 }

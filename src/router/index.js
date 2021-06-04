@@ -123,6 +123,15 @@ let router = new VueRouter({
               children: []
             },
             {
+              path: '/mine/myRecommenedSubUsers', // 我推荐的人推荐的人
+              name: 'myRecommenedSubUsers',
+              meta: {
+                title: '我推荐的人推荐的人'
+              },
+              component: resolve => (require(['@/pages/mine/myRecommenedSubUsers'], resolve)),
+              children: []
+            },
+            {
               path: '/mine/myTransactionList', // 我的交易流水
               name: 'myTransactionList',
               meta: {
